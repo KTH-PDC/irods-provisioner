@@ -2,3 +2,9 @@
 #
 # group_vars/irods-icat - group variables for the iRODS iCAT hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+# database configuration
+healthcheck_user: healthcheck
+healthcheck_passwd: 0nksp0ssuja
+healthcheck_db: healthcheck
+
