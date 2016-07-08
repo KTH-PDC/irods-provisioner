@@ -1,0 +1,42 @@
+# irods-icat-provisioner
+#
+# playbooks/irods-icat.yml - Ansible playbook for configuring an iRODS iCAT
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+- hosts: irods-icat
+
+  tasks:
+    - name: install required package repositories
+      yum: name={{ item }} state=installed
+      with_items:
+        - http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
+        - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm
+        - http://www.pgpool.net/yum/rpms/3.5/redhat/rhel-7-x86_64/pgpool-II-release-3.5-1.noarch.rpm
+
+    - name: install necessary management packages
+      yum: name={{ item }} state=latest
+      with_items:
+        - net-tools
+        - htop
+        - iotop
+        - iftop
+
+    - name: install PostgreSQL 9.4 database server and unixODBC
+      yum: name={{ item }} state=latest
+      with_items:
+        - postgresql94-debuginfo
+        - postgresql94-contrib
+        - postgresql94-libs
+        - postgresql94-odbc
+        - postgresql94-server
+        - unixODBC
+
+    - name: install pgpool-II 3.5 for PostgreSQL 9.4
+      yum: name={{ item }} state=latest
+      with_items:
+        - pgpool-II-pg94
+        - pgpool-II-pg94-debuginfo
+        - pgpool-II-pg94-extensions
+        - pgpoolAdmin
