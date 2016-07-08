@@ -8,12 +8,14 @@ boxes = [
   {
     :name => "rodsmaster1",
     :eth1 => "192.168.56.20",
+    :eth2 => "10.13.37.20",
     :mem => "1024",
     :cpu => "1"
   },
   {
     :name => "rodsmaster2",
     :eth1 => "192.168.56.21",
+    :eth2 => "10.13.37.21",
     :mem => "1024",
     :cpu => "1"
   }
@@ -37,6 +39,8 @@ Vagrant.configure(2) do |config|
       end
 
       config.vm.network :private_network, ip: opts[:eth1]
+      
+      config.vm.network :private_network, ip: opts[:eth2], virtualbox__intnet: true
     end
   end
 end
