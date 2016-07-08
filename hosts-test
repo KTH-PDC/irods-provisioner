@@ -2,3 +2,7 @@
 #
 # hosts-test - Ansible inventory file for the test hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+[irods-icat]
+rodsmaster1
+rodsmaster2
