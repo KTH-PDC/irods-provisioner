@@ -9,3 +9,4 @@ ansible_host: 192.168.56.21
 ansible_user: vagrant
 ansible_ssh_private_key_file: .vagrant/machines/rodsmaster2/virtualbox/private_key
 ansible_become_user: root
+
