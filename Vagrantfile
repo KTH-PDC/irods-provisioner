@@ -38,8 +38,10 @@ Vagrant.configure(2) do |config|
         v.customize ["modifyvm", :id, "--cpus", opts[:cpu]]
       end
 
+      # virtualbox host only network for host connectivity
       config.vm.network :private_network, ip: opts[:eth1]
-      
+
+      # virtualbox private network for the HA network
       config.vm.network :private_network, ip: opts[:eth2], virtualbox__intnet: true
     end
   end
