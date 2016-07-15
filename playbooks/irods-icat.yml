@@ -6,24 +6,29 @@
 ---
 
 - hosts: irods-icat
+  become_user: root
 
   tasks:
-    - name: install required package repositories
+    - name: required package repositories
       yum: name={{ item }} state=installed
       with_items:
         - http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
         - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm
         - http://www.pgpool.net/yum/rpms/3.5/redhat/rhel-7-x86_64/pgpool-II-release-3.5-1.noarch.rpm
 
-    - name: install necessary management packages
+    - name: necessary management packages
       yum: name={{ item }} state=latest
       with_items:
+        - psmisc
         - net-tools
         - htop
         - iotop
         - iftop
+        - python-psycopg2
+        - httpd
+        - php
 
-    - name: install PostgreSQL 9.4 database server and unixODBC
+    - name: PostgreSQL 9.4 database server and unixODBC
       yum: name={{ item }} state=latest
       with_items:
         - postgresql94-debuginfo
@@ -33,10 +38,69 @@
         - postgresql94-server
         - unixODBC
 
-    - name: install pgpool-II 3.5 for PostgreSQL 9.4
+    - name: pgpool-II 3.5 for PostgreSQL 9.4
       yum: name={{ item }} state=latest
       with_items:
         - pgpool-II-pg94
         - pgpool-II-pg94-debuginfo
         - pgpool-II-pg94-extensions
         - pgpoolAdmin
+
+    - name: iRODS version 4.1.8
+      yum: name={{ item }} state=installed
+      with_items:
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-runtime-4.1.8-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-icat-4.1.8-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-database-plugin-postgres-1.8-centos7-x86_64.rpm
+
+    - name: initialize postgres database on initial master node
+      command: "{{ postgres_prefix }}/bin/postgresql94-setup initdb"
+      args:
+        creates: "{{ postgres_datadir }}/postgresql.conf"
+      when: ha_state == "master"
+
+    - name: set postgres service enabled on database nodes
+      service: name=postgresql-9.4 enabled=yes
+
+    - name: postgres service started on postgres master
+      service: name=postgresql-9.4 state=started
+      when: ha_state == "master"
+
+    - name: configure pgpool-II extensions for template1 on postgres master
+      become: yes
+      become_user: postgres
+      command: "{{ postgres_prefix }}/bin/psql -f {{ postgres_prefix }}/share/extension/pgpool-recovery.sql template1 -o {{ postgres_rootdir }}/pgpool-recovery.log"
+      args:
+        creates: "{{ postgres_rootdir }}/pgpool-recovery.log"
+      when: ha_state == "master"      
+
+    - name: configure database roles on postgres master
+      become: yes
+      become_user: postgres
+      postgresql_user: name={{ item.name }} password={{ item.password }} role_attr_flags={{ item.flags }}
+      when: ha_state == "master"
+      with_items:
+        - { name: "{{ healthcheck_user }}", password: "{{ healthcheck_passwd }}", flags: "LOGIN" }
+        - { name: "{{ irods_icat_user }}", password: "{{ irods_icat_passwd }}", flags: "LOGIN" }
+        - { name: "{{ replication_user }}", password: "{{ replication_passwd }}", flags: "LOGIN,REPLICATION" }
+
+    - name: configure databases on postgres master
+      become: yes
+      become_user: postgres
+      postgresql_db: name={{ item.name }} owner={{ item.owner }} encoding="UTF-8" template="template1" login_user="postgres"
+      when: ha_state == "master"
+      with_items:
+        - { name: "{{ healthcheck_db }}", owner: "{{ healthcheck_user }}" }
+        - { name: "{{ irods_icat_db }}", owner: "{{ irods_icat_user }}" }
+
+    - name: basebackup on postgres slave
+      become: yes
+      become_user: postgres
+      command: "{{ postgres_prefix }}/bin/pg_basebackup -R -D {{ postgres_datadir }} -U {{ replication_user }} -X stream -h {{ hostvars[irods_icat_master]['ha_ipaddr'] }}"
+      args:
+        creates: "{{ postgres_datadir }}/postgresql.conf"
+      when: ha_state == "slave"
+
+    - name: postgres service started on postgres slave
+      service: name=postgresql-9.4 state=started
+      when: ha_state == "slave"
