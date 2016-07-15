@@ -3,8 +3,26 @@
 # group_vars/irods-icat - group variables for the iRODS iCAT hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
 
-# database configuration
+# cluster configuration
+irods_icat_master: rodsmaster1
+irods_icat_slave: rodsmaster2
+
+# postgres base configuration
+postgres_prefix: /usr/pgsql-9.4/
+postgres_rootdir: /var/lib/pgsql/9.4/
+postgres_datadir: /var/lib/pgsql/9.4/data/
+
+# postgres healthcheck role/database configuration
 healthcheck_user: healthcheck
 healthcheck_passwd: 0nksp0ssuja
 healthcheck_db: healthcheck
+
+# postgres irods icat role/database configuration
+irods_icat_user: irods
+irods_icat_passwd: r0dsi@p0ssu
+irods_icat_db: irods-icat
+
+# postgres replication role configuration
+replication_user: replication
+replication_passwd: kl00nip0ssu
 
