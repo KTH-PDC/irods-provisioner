@@ -93,6 +93,12 @@
         - { name: "{{ healthcheck_db }}", owner: "{{ healthcheck_user }}" }
         - { name: "{{ irods_icat_db }}", owner: "{{ irods_icat_user }}" }
 
+
+    - name: configure postgres credentials
+      become: yes
+      become_user: postgres
+      template: src=../templates/postgres-pgpass.j2 dest={{ postgres_homedir }}/.pgpass owner=postgres group=postgres mode=0600
+
     - name: basebackup on postgres slave
       become: yes
       become_user: postgres
