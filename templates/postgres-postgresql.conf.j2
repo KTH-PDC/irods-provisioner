@@ -9,9 +9,9 @@ max_connections = 100
 shared_buffers = 128MB
 dynamic_shared_memory_type = posix
 
+hot_standby = on
 wal_level = hot_standby
-fsync = on
-synchronous_commit = on
+max_wal_senders = 10
 
 log_destination = 'stderr'
 logging_collector = on
