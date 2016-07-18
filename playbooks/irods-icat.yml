@@ -118,3 +118,10 @@
     - name: postgres service started on postgres slave
       service: name=postgresql-9.4 state=restarted
       when: ha_state == "slave"
+
+    - name: write iRODS iCAT setup answerfile
+      template: src="../templates/irods-icat-setup-answerfile.j2" dest="{{ irods_home }}/setup-answerfile.txt" owner=root group=root mode=0600
+
+    - name: execute iRODS iCAT initial setup if necessary on master
+      shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
+      when: ha_state == "master"
