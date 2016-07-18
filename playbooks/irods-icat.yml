@@ -62,14 +62,17 @@
     - name: set postgres service enabled on database nodes
       service: name=postgresql-9.4 enabled=yes
 
-    - name: configure database authentication on postgres master
+    - name: write postgresql configurations on postgres master
       become: yes
       become_user: postgres
-      template: src="../templates/postgres-pg_hba.conf.j2" dest="{{ postgres_homedir }}/.pgpass" owner=postgres mode=0600
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner=postgres mode=0600
       when: ha_state == "master"
+      with_items:
+        - { srcfile: "../templates/postgres-pg_hba.conf.j2", destfile: "{{ postgres_datadir}}//pg_hba.conf" }
+        - { srcfile: "../templates/postgres-postgresql.conf.j2", destfile: "{{ postgres_datadir }}/postgresql.conf" }
       
     - name: postgres service started on postgres master
-      service: name=postgresql-9.4 state=started
+      service: name=postgresql-9.4 state=restarted
       when: ha_state == "master"
 
     - name: configure pgpool-II extensions for template1 on postgres master
@@ -113,5 +116,5 @@
       when: ha_state == "slave"
 
     - name: postgres service started on postgres slave
-      service: name=postgresql-9.4 state=started
+      service: name=postgresql-9.4 state=restarted
       when: ha_state == "slave"
