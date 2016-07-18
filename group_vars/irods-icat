@@ -8,6 +8,7 @@ irods_icat_master: rodsmaster1
 irods_icat_slave: rodsmaster2
 
 # iRODS configuration
+irods_home: /var/lib/irods
 irods_service_account: irods
 irods_service_group: irods
 irods_zone_name: tempZone
