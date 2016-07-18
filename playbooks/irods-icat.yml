@@ -77,7 +77,7 @@
     - name: configure database roles on postgres master
       become: yes
       become_user: postgres
-      postgresql_user: name={{ item.name }} password={{ item.password }} role_attr_flags={{ item.flags }}
+      postgresql_user: name={{ item.name }} password={{ item.password }} role_attr_flags={{ item.flags }} encrypted=yes
       when: ha_state == "master"
       with_items:
         - { name: "{{ healthcheck_user }}", password: "{{ healthcheck_passwd }}", flags: "LOGIN" }
