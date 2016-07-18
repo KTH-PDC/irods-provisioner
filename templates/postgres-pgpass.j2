@@ -1,0 +1,2 @@
+{{ hostvars[irods_icat_master]['ha_ipaddr'] }}:{{ postgres_port }}:replication:{{ replication_user }}:{{ replication_passwd }}
+{{ hostvars[irods_icat_slave]['ha_ipaddr'] }}:{{ postgres_port }}:replication:{{ replication_user }}:{{ replication_passwd }}
