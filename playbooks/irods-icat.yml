@@ -62,6 +62,12 @@
     - name: set postgres service enabled on database nodes
       service: name=postgresql-9.4 enabled=yes
 
+    - name: configure database authentication on postgres master
+      become: yes
+      become_user: postgres
+      template: src="../templates/postgres-pg_hba.conf.j2" dest="{{ postgres_homedir }}/.pgpass" owner=postgres mode=0600
+      when: ha_state == "master"
+      
     - name: postgres service started on postgres master
       service: name=postgresql-9.4 state=started
       when: ha_state == "master"
@@ -93,11 +99,10 @@
         - { name: "{{ healthcheck_db }}", owner: "{{ healthcheck_user }}" }
         - { name: "{{ irods_icat_db }}", owner: "{{ irods_icat_user }}" }
 
-
-    - name: configure postgres credentials
+    - name: configure postgres credentials for replication
       become: yes
       become_user: postgres
-      template: src=../templates/postgres-pgpass.j2 dest={{ postgres_homedir }}/.pgpass owner=postgres group=postgres mode=0600
+      template: src="../templates/postgres-pgpass.j2" dest="{{ postgres_homedir }}/.pgpass" owner=postgres group=postgres mode=0600
 
     - name: basebackup on postgres slave
       become: yes
