@@ -26,10 +26,10 @@ irods_admin_passwd: rods
 
 # postgres base configuration
 postgres_port: 5432
-postgres_prefix: /usr/pgsql-9.4/
-postgres_homedir: /var/lib/pgsql/
-postgres_rootdir: /var/lib/pgsql/9.4/
-postgres_datadir: /var/lib/pgsql/9.4/data/
+postgres_prefix: /usr/pgsql-9.4
+postgres_homedir: /var/lib/pgsql
+postgres_rootdir: /var/lib/pgsql/9.4
+postgres_datadir: /var/lib/pgsql/9.4/data
 
 # postgres healthcheck role/database configuration
 healthcheck_user: healthcheck
