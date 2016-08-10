@@ -5,16 +5,13 @@
 
 ---
 
-  become_user: root
-
-  tasks:
     - name: required package repositories
       yum: name={{ item }} state=installed
       with_items:
         - epel-release
         - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm
 
-    - name: PostgreSQL 9.4 database server and unixODBC
+    - name: PostgreSQL 9.4 database server and python bindings
       yum: name={{ item }} state=latest
       with_items:
         - postgresql94-debuginfo
@@ -22,7 +19,7 @@
         - postgresql94-libs
         - postgresql94-odbc
         - postgresql94-server
-        - unixODBC
+        - python-psycopg2
 
     - name: initialize postgres database on initial master node
       command: "{{ postgres_prefix }}/bin/postgresql94-setup initdb"
@@ -44,6 +41,12 @@
       
     - name: postgres service started on postgres master
       service: name=postgresql-9.4 state=restarted
+      when: ha_state == "master"
+
+    - name: configure postgres replication role
+      become: yes
+      become_user: postgres
+      postgresql_user: name={{ replication_user }} password={{ replication_passwd }} role_attr_flags="LOGIN,REPLICATION" encrypted=yes
       when: ha_state == "master"
 
     - name: configure postgres credentials for replication
