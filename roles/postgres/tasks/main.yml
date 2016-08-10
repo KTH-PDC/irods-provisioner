@@ -1,0 +1,65 @@
+# irods-icat-provisioner
+#
+# roles/postgres/tasks/main.yml - Ansible task for configuring a replicated postgres database
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+  become_user: root
+
+  tasks:
+    - name: required package repositories
+      yum: name={{ item }} state=installed
+      with_items:
+        - epel-release
+        - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm
+
+    - name: PostgreSQL 9.4 database server and unixODBC
+      yum: name={{ item }} state=latest
+      with_items:
+        - postgresql94-debuginfo
+        - postgresql94-contrib
+        - postgresql94-libs
+        - postgresql94-odbc
+        - postgresql94-server
+        - unixODBC
+
+    - name: initialize postgres database on initial master node
+      command: "{{ postgres_prefix }}/bin/postgresql94-setup initdb"
+      args:
+        creates: "{{ postgres_datadir }}/postgresql.conf"
+      when: ha_state == "master"
+
+    - name: set postgres service enabled on database nodes
+      service: name=postgresql-9.4 enabled=yes
+
+    - name: write postgresql configurations on postgres master
+      become: yes
+      become_user: postgres
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner=postgres mode=0600
+      when: ha_state == "master"
+      with_items:
+        - { srcfile: "../templates/postgres-pg_hba.conf.j2", destfile: "{{ postgres_datadir}}//pg_hba.conf" }
+        - { srcfile: "../templates/postgres-postgresql.conf.j2", destfile: "{{ postgres_datadir }}/postgresql.conf" }
+      
+    - name: postgres service started on postgres master
+      service: name=postgresql-9.4 state=restarted
+      when: ha_state == "master"
+
+    - name: configure postgres credentials for replication
+      become: yes
+      become_user: postgres
+      template: src="../templates/postgres-pgpass.j2" dest="{{ postgres_homedir }}/.pgpass" owner=postgres group=postgres mode=0600
+
+    - name: basebackup on postgres slave
+      become: yes
+      become_user: postgres
+      command: "{{ postgres_prefix }}/bin/pg_basebackup -R -D {{ postgres_datadir }} -U {{ replication_user }} -X stream -h {{ hostvars[irods_icat_master]['ha_ipaddr'] }}"
+      args:
+        creates: "{{ postgres_datadir }}/postgresql.conf"
+      when: ha_state == "slave"
+
+    - name: postgres service started on postgres slave
+      service: name=postgresql-9.4 state=restarted
+      when: ha_state == "slave"
+
