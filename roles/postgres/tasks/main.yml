@@ -10,6 +10,7 @@
       with_items:
         - epel-release
         - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm
+        - http://www.pgpool.net/yum/rpms/3.5/redhat/rhel-7-x86_64/pgpool-II-release-3.5-1.noarch.rpm
 
     - name: PostgreSQL 9.4 database server and python bindings
       yum: name={{ item }} state=latest
@@ -19,6 +20,7 @@
         - postgresql94-libs
         - postgresql94-odbc
         - postgresql94-server
+        - pgpool-II-pg94-extensions
         - python-psycopg2
 
     - name: initialize postgres database on initial master node
@@ -36,7 +38,7 @@
       template: src={{ item.srcfile }} dest={{ item.destfile }} owner=postgres mode=0600
       when: ha_state == "master"
       with_items:
-        - { srcfile: "../templates/postgres-pg_hba.conf.j2", destfile: "{{ postgres_datadir}}//pg_hba.conf" }
+        - { srcfile: "../templates/postgres-pg_hba.conf.j2", destfile: "{{ postgres_datadir }}//pg_hba.conf" }
         - { srcfile: "../templates/postgres-postgresql.conf.j2", destfile: "{{ postgres_datadir }}/postgresql.conf" }
       
     - name: postgres service started on postgres master
@@ -47,6 +49,14 @@
       become: yes
       become_user: postgres
       postgresql_user: name={{ replication_user }} password={{ replication_passwd }} role_attr_flags="LOGIN,REPLICATION" encrypted=yes
+      when: ha_state == "master"
+
+    - name: configure pgpool-II extensions for template1 on postgres master
+      become: yes
+      become_user: postgres
+      command: "{{ postgres_prefix }}/bin/psql -f {{ postgres_prefix }}/share/extension/pgpool-recovery.sql template1 -o {{ postgres_rootdir }}/pgpool-recovery.log"
+      args:
+        creates: "{{ postgres_rootdir }}/pgpool-recovery.log"
       when: ha_state == "master"
 
     - name: configure postgres credentials for replication
