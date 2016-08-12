@@ -44,7 +44,7 @@
     - name: execute iRODS iCAT initial permissions setup if necessary
       shell: "{{ irods_home }}/packaging/setup_irods_service_account.sh < {{ irods_home }}/setup-permissions-answerfile.txt"
       args:
-        creates: "{{ /etc/irods/service_account.config }}"
+        creates: "/etc/irods/service_account.config"
 
     - name: execute iRODS iCAT initial setup if necessary on master
       shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
