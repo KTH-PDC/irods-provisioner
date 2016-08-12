@@ -1,0 +1,31 @@
+# irods-icat-provisioner
+#
+# roles/pgpool-II/tasks/main.yml - Ansible task for configuring pgpool-II 
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+    - name: pgpool-II 3.5 for PostgreSQL 9.4
+      yum: name={{ item }} state=latest
+      with_items:
+        - pgpool-II-pg94
+        - pgpool-II-pg94-debuginfo
+        - pgpool-II-pg94-extensions
+        - pgpoolAdmin
+
+    - name: configure pgpool-II healthcheck database roles on postgres master
+      become: yes
+      become_user: postgres
+      postgresql_user: name={{ item.name }} password={{ item.password }} role_attr_flags={{ item.flags }} encrypted=yes
+      when: ha_state == "master"
+      with_items:
+        - { name: "{{ healthcheck_user }}", password: "{{ healthcheck_passwd }}", flags: "LOGIN" }
+
+    - name: configure pgpool-II healthcheck databases on postgres master
+      become: yes
+      become_user: postgres
+      postgresql_db: name={{ item.name }} owner={{ item.owner }} encoding="UTF-8" template="template1" login_user="postgres"
+      when: ha_state == "master"
+      with_items:
+        - { name: "{{ healthcheck_db }}", owner: "{{ healthcheck_user }}" }
+
