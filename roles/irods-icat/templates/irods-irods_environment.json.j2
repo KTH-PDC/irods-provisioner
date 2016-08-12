@@ -2,8 +2,8 @@
     "irods_host": "localhost",
     "irods_port": {{ irods_zone_port }},
     "irods_default_resource": "demoResc",
-    "irods_home": "{{ irods_zone_name }}/home/rods",
-    "irods_cwd": "{{ irods_zone_name }}/home/rods",
+    "irods_home": "/{{ irods_zone_name }}/home/rods",
+    "irods_cwd": "/{{ irods_zone_name }}/home/rods",
     "irods_user_name": "{{ irods_admin_user }}",
     "irods_zone_name": "{{ irods_zone_name }}",
     "irods_client_server_negotiation": "request_server_negotiation",
@@ -15,10 +15,10 @@
     "irods_default_hash_scheme": "SHA256",
     "irods_match_hash_policy": "compatible",
     "irods_server_control_plane_port": {{ irods_ctrl_port }},
-    "irods_server_control_plane_key": {{ irods_ctrl_key }},
+    "irods_server_control_plane_key": "{{ irods_ctrl_key }}",
     "irods_server_control_plane_encryption_num_hash_rounds": 16,
     "irods_server_control_plane_encryption_algorithm": "AES-256-CBC",
     "irods_maximum_size_for_single_buffer_in_megabytes": 32,
     "irods_default_number_of_transfer_threads": 4,
-    "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": 4,
+    "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": 4
 }

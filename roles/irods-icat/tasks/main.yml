@@ -46,6 +46,9 @@
       args:
         creates: "/etc/irods/service_account.config"
 
+    - name: iRODS service account environment directory
+      file: path="{{ irods_home }}/.irods" state=directory owner={{ irods_service_account }} group={{ irods_service_group }} mode=0700 
+
     - name: execute iRODS iCAT initial setup if necessary on master
       shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
       when: ha_state == "master"
@@ -57,7 +60,7 @@
       with_items:
         - { srcfile: "../templates/irods-dot-odbc.ini.j2", destfile: "{{ irods_home }}/.odbc.ini" }
         - { srcfile: "../templates/irods-dot-pgpass.j2", destfile: "{{ irods_home }}/.pgpass" }
-	- { srcfile: "../templates/irods-irods_environment.json.j2", destfile: "{{ irods_home }}/.irods/irods_environment.json" }
+        - { srcfile: "../templates/irods-irods_environment.json.j2", destfile: "{{ irods_home }}/.irods/irods_environment.json" }
         - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
         - { srcfile: "../templates/irods-database_config.json.j2", destfile: "/etc/irods/database_config.json" }
         - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
