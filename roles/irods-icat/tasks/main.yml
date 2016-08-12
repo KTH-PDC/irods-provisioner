@@ -1,0 +1,63 @@
+# irods-icat-provisioner
+#
+# playbooks/irods-icat.yml - Ansible playbook for configuring an iRODS iCAT
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+    - name: iRODS version 4.1.8
+      yum: name={{ item }} state=installed
+      with_items:
+        - unixODBC
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-runtime-4.1.8-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-icat-4.1.8-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-database-plugin-postgres-1.8-centos7-x86_64.rpm
+
+    - name: configure database roles on postgres master
+      become: yes
+      become_user: postgres
+      postgresql_user: name={{ item.name }} password={{ item.password }} role_attr_flags={{ item.flags }} encrypted=yes
+      when: ha_state == "master"
+      with_items:
+        - { name: "{{ irods_icat_user }}", password: "{{ irods_icat_passwd }}", flags: "LOGIN" }
+
+    - name: configure databases on postgres master
+      become: yes
+      become_user: postgres
+      postgresql_db: name={{ item.name }} owner={{ item.owner }} encoding="UTF-8" template="template1" login_user="postgres"
+      when: ha_state == "master"
+      with_items:
+        - { name: "{{ irods_icat_db }}", owner: "{{ irods_icat_user }}" }
+
+    - name: iRODS service group
+      group: name={{ irods_service_group }} state=present
+
+    - name: iRODS service account
+      user: name={{ irods_service_account }} group={{ irods_service_group }} comment="iRODS Administrator" home={{ irods_home }}
+
+    - name: write iRODS iCAT setup answerfile(s)
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
+      with_items:
+        - { srcfile: "../templates/irods-icat-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-answerfile.txt" }
+        - { srcfile: "../templates/irods-icat-permissions-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-permissions-answerfile.txt" }
+
+    - name: execute iRODS iCAT initial permissions setup if necessary
+      shell: "{{ irods_home }}/packaging/setup_irods_service_account.sh < {{ irods_home }}/setup-permissions-answerfile.txt"
+      args:
+        creates: "{{ /etc/irods/service_account.config }}"
+
+    - name: execute iRODS iCAT initial setup if necessary on master
+      shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
+      when: ha_state == "master"
+      args:
+        creates: "{{ irods_home }}/.irods/irods_environment.json"
+
+    - name: configure iRODS iCAT
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
+      with_items:
+        - { srcfile: "../templates/irods-dot-odbc.ini.j2", destfile: "{{ irods_home }}/.odbc.ini" }
+        - { srcfile: "../templates/irods-dot-pgpass.j2", destfile: "{{ irods_home }}/.pgpass" }
+        - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
+        - { srcfile: "../templates/irods-database_config.json.j2", destfile: "/etc/irods/database_config.json" }
+        - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
+
