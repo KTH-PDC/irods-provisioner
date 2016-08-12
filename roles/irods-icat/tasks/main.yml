@@ -57,6 +57,7 @@
       with_items:
         - { srcfile: "../templates/irods-dot-odbc.ini.j2", destfile: "{{ irods_home }}/.odbc.ini" }
         - { srcfile: "../templates/irods-dot-pgpass.j2", destfile: "{{ irods_home }}/.pgpass" }
+	- { srcfile: "../templates/irods-irods_environment.json.j2", destfile: "{{ irods_home }}/.irods/irods_environment.json" }
         - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
         - { srcfile: "../templates/irods-database_config.json.j2", destfile: "/etc/irods/database_config.json" }
         - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
