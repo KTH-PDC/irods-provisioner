@@ -14,10 +14,11 @@
       when: hostvars[item].ansible_eth1.ipv4.address is defined
       with_items: "{{ groups['all'] }}" 
 
-- hosts: irods-icat
-  become_user: root
+    - name: necessary package repositories
+      yum: name={{ item }} state=latest
+      with_items:
+        - epel-release
 
-  tasks:
     - name: necessary management packages
       yum: name={{ item }} state=latest
       with_items:
@@ -30,6 +31,9 @@
         - httpd
         - php
 
+- hosts: irods-icat
+  become_user: root
+  
   roles:
     - role: postgres 
 
