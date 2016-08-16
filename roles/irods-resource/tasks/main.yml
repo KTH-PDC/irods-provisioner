@@ -1,0 +1,13 @@
+# irods-icat-provisioner
+#
+# roles/irods-resource/tasks/main.yml - Ansible playbook for configuring an iRODS resource server
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+    - name: iRODS packages (version 4.1.8)
+      yum: name={{ item }} state=installed
+      with_items:
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-runtime-4.1.8-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-resource-4.1.8-centos7-x86_64.rpm
+
