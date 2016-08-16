@@ -9,11 +9,6 @@
   become_user: root
 
   tasks:
-    - name: required package repositories
-      yum: name={{ item }} state=installed
-      with_items:
-        - epel-release
-
     - name: necessary management packages
       yum: name={{ item }} state=latest
       with_items:
@@ -32,3 +27,12 @@
     - role: irods-icat
 
     - role: pgpool-II
+
+
+- hosts: irods-resource
+  become_user: root
+
+  roles:
+    - role: irods-resource
+
+    - role: davrods

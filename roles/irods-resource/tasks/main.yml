@@ -5,6 +5,11 @@
 
 ---
 
+    - name: required package repositories
+      yum: name={{ item }} state=installed
+      with_items:
+        - epel-release
+
     - name: iRODS packages (version 4.1.8)
       yum: name={{ item }} state=installed
       with_items:
