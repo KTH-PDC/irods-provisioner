@@ -6,3 +6,7 @@
 [irods-icat]
 rodsmaster1
 rodsmaster2
+
+[irods-resource]
+rodsresc1
+rodsresc2
