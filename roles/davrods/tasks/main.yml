@@ -1,0 +1,21 @@
+# irods-icat-provisioner
+#
+# roles/davrods/tasks/main.yml - Ansible playbook for configuring a DavRods frontend
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+    - name: iRODS version 4.1.8 
+      yum: name={{ item }} state=installed
+      with_items:
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-runtime-4.1.8-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-icommands-4.1.8-centos7-x86_64.rpm
+
+    - name: Apache httpd
+      yum: name={{ item }} state=installed
+      with_items:
+        - httpd
+        - httpd-tools
+
+    - name: DavRods version 1.1.0
+      yum: name=https://github.com/UtrechtUniversity/davrods/releases/download/1.1/davrods-1.1.0-1.el7.centos.x86_64.rpm state=installed
