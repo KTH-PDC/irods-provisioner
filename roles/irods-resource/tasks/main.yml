@@ -16,3 +16,25 @@
         - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-runtime-4.1.8-centos7-x86_64.rpm
         - ftp://ftp.renci.org/pub/irods/releases/4.1.8/centos7/irods-resource-4.1.8-centos7-x86_64.rpm
 
+    - name: iRODS service group
+      group: name={{ irods_service_group }} state=present
+
+    - name: iRODS service account
+      user: name={{ irods_service_account }} group={{ irods_service_group }} comment="iRODS Administrator" home={{ irods_home }}
+
+    - name: write iRODS resource setup answerfile(s)
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
+      with_items:
+        - { srcfile: "../templates/irods-resource-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-answerfile.txt" }
+        - { srcfile: "../../../templates/irods-permissions-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-permissions-answerfile.txt" }
+
+    - name: execute iRODS initial permissions setup if necessary
+      shell: "{{ irods_home }}/packaging/setup_irods_service_account.sh < {{ irods_home }}/setup-permissions-answerfile.txt"
+      args:
+        creates: "/etc/irods/service_account.config"
+
+    - name: execute iRODS initial setup if necessary
+      shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
+      args:
+        creates: "{{ irods_home }}/.irods/irods_environment.json"
+
