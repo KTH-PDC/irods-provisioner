@@ -23,6 +23,7 @@ irods_ctrl_key: TEMPORARY__32byte_ctrl_plane_key
 irods_validation_url: https://schemas.irods.org/configuration
 irods_admin_user: rods
 irods_admin_passwd: rods
+irods_default_resc: demoResc
 
 # postgres base configuration
 postgres_port: 5432
