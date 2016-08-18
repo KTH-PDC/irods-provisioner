@@ -40,9 +40,10 @@
       with_items:
         - { srcfile: "../templates/postgres-pg_hba.conf.j2", destfile: "{{ postgres_datadir }}//pg_hba.conf" }
         - { srcfile: "../templates/postgres-postgresql.conf.j2", destfile: "{{ postgres_datadir }}/postgresql.conf" }
+      notify: restart postgres
       
     - name: postgres service started on postgres master
-      service: name=postgresql-9.4 state=restarted
+      service: name=postgresql-9.4 state=started
       when: ha_state == "master"
 
     - name: configure postgres replication role
@@ -71,8 +72,9 @@
       args:
         creates: "{{ postgres_datadir }}/postgresql.conf"
       when: ha_state == "slave"
+      notify: restart postgres
 
     - name: postgres service started on postgres slave
-      service: name=postgresql-9.4 state=restarted
+      service: name=postgresql-9.4 state=started
       when: ha_state == "slave"
 
