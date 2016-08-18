@@ -1,0 +1,15 @@
+# irods-icat-provisioner
+#
+# host_vars/rodsresc3 - host configuration file for host rodsresc3
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+# host management setup
+ansible_connection: ssh
+ansible_host: 192.168.56.24
+ansible_user: vagrant
+ansible_ssh_private_key_file: .vagrant/machines/rodsresc3/virtualbox/private_key
+
+# private network setup
+ha_netif: eth2
+ha_ipaddr: 10.13.37.24
+ha_netmask: 255.255.255.0
