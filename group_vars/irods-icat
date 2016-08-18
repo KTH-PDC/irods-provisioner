@@ -1,4 +1,4 @@
-# irods-icat-provisioner
+# irods-provisioner
 #
 # group_vars/irods-icat - group variables for the iRODS iCAT hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology

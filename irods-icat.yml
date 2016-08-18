@@ -1,4 +1,4 @@
-# irods-icat-provisioner
+# irods-provisioner
 #
 # playbooks/irods-icat.yml - Ansible playbook for configuring an iRODS iCAT
 # Author: Ilari Korhonen, KTH Royal Institute of Technology

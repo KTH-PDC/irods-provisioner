@@ -1,4 +1,4 @@
-# irods-icat-provisioner
+# irods-provisioner
 #
 # roles/irods-resource/tasks/main.yml - Ansible playbook for configuring an iRODS resource server
 # Author: Ilari Korhonen, KTH Royal Institute of Technology

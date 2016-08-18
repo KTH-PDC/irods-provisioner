@@ -1,4 +1,4 @@
-# irods-icat-provisioner
+# irods-provisioner
 #
 # Vagrantfile - manifest file for Vagrant to provision virtual machines
 # Author: Ilari Korhonen, KTH Royal Institute of Technology

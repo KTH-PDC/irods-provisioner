@@ -1,4 +1,4 @@
-# irods-icat-provisioner
+# irods-provisioner
 #
 # roles/postgres/tasks/main.yml - Ansible task for configuring a replicated postgres database
 # Author: Ilari Korhonen, KTH Royal Institute of Technology

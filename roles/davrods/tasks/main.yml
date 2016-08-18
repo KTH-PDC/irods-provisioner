@@ -1,4 +1,4 @@
-# irods-icat-provisioner
+# irods-provisioner
 #
 # roles/davrods/tasks/main.yml - Ansible playbook for configuring a DavRods frontend
 # Author: Ilari Korhonen, KTH Royal Institute of Technology

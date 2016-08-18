@@ -1,4 +1,4 @@
-# irods-icat-provisioner
+# irods-provisioner
 #
 # roles/pgpool-II/tasks/main.yml - Ansible task for configuring pgpool-II 
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
