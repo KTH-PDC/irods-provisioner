@@ -14,9 +14,9 @@ Requirements:
 
 To get started with the virtual testing environment
 
-   git clone https://github.com/KTH-PDC/irods-provisioner.git
-   cd irods-provisioner
-   vagrant up
-   ansible-playbook -b -i hosts-test irods-icat.yml
+	git clone https://github.com/KTH-PDC/irods-provisioner.git
+	cd irods-provisioner
+	vagrant up
+	ansible-playbook -b -i hosts-test irods-icat.yml
 
 This should configure the virtual machines with a complete iRODS data grid.
