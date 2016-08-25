@@ -16,5 +16,11 @@
         - httpd
         - httpd-tools
 
-    - name: DavRods version 1.1.0
+    - name: Davrods version 1.1.0
       yum: name=https://github.com/UtrechtUniversity/davrods/releases/download/1.1/davrods-1.1.0-1.el7.centos.x86_64.rpm state=installed
+
+    - name: Davrods configurations
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner=root group=root mode=0644
+      with_items:
+        - { srcfile: "../templates/davrods-vhost.conf.j2", destfile: "/etc/httpd/conf.d/davrods-vhost.conf" }
+      notify: restart httpd
