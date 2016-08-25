@@ -19,6 +19,12 @@
     - name: Davrods version 1.1.0
       yum: name=https://github.com/UtrechtUniversity/davrods/releases/download/1.1/davrods-1.1.0-1.el7.centos.x86_64.rpm state=installed
 
+    - name: SELinux for Davrods - allow httpd to connect to iRODS
+      command: "setsebool -P httpd_can_network_connect true"
+
+    - name: SELinux for Davrods - set correct context for iRODS network plugins
+      command: "chcon -t lib_t /var/lib/irods/plugins/network/libtcp.so /var/lib/irods/plugins/network/libssl.so"
+
     - name: Davrods configurations
       template: src={{ item.srcfile }} dest={{ item.destfile }} owner=root group=root mode=0644
       with_items:
