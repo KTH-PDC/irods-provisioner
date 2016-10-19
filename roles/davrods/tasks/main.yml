@@ -29,4 +29,5 @@
       template: src={{ item.srcfile }} dest={{ item.destfile }} owner=root group=root mode=0644
       with_items:
         - { srcfile: "../templates/davrods-vhost.conf.j2", destfile: "/etc/httpd/conf.d/davrods-vhost.conf" }
+        - { srcfile: "../templates/davrods-irods_environment.json.j2", destfile: "/etc/httpd/irods/irods_environment.json" }
       notify: restart httpd
