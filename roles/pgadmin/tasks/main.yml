@@ -1,0 +1,27 @@
+# irods-provisioner
+#
+# roles/pgadmin/tasks/main.yml - Ansible playbook for configuring a pgAdmin application
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+  - name: PostgreSQL 9.4 package repository
+    yum: name=http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-3.noarch.rpm state=present
+
+  - name: pgAdmin 4 web application
+    yum: name=pgadmin4-web state=latest
+
+  - name: Apache WSGI module
+    yum: name=mod_wsgi state=latest
+
+  - name: pgAdmin 4 web reverse proxy config
+    template: src=../templates/httpd-pgadmin.conf.j2 dest=/etc/httpd/conf.d/pgadmin.conf owner=root group=root mode=0644
+
+  - name: SElinux to allow httpd to reconnect (reverse proxy)
+    command: /usr/sbin/setsebool -P httpd_can_network_connect 1
+
+  - name: pgAdmin service enabled and started
+    service: name=pgadmin4 enabled=yes state=started
+
+  - name: httpd service enabled and started
+    service: name=httpd enabled=yes state=started
