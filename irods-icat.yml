@@ -39,9 +39,6 @@
 
     - role: irods-icat
 
-    - role: pgpool-II
-
-
 - hosts: irods-resource
   become_user: root
 
