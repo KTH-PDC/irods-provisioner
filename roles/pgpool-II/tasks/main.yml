@@ -5,13 +5,15 @@
 
 ---
 
+    - name: PostgreSQL 9.4 package repository
+      yum: name=http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-3.noarch.rpm state=present
+
     - name: pgpool-II 3.5 for PostgreSQL 9.4
       yum: name={{ item }} state=latest
       with_items:
-        - pgpool-II-pg94
-        - pgpool-II-pg94-debuginfo
-        - pgpool-II-pg94-extensions
-        - pgpoolAdmin
+        - pgpool-II-94
+        - pgpool-II-94-debuginfo
+        - pgpool-II-94-extensions
 
     - name: configure pgpool-II healthcheck database roles on postgres master
       become: yes
