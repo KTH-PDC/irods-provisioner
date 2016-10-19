@@ -9,8 +9,7 @@
       yum: name={{ item }} state=installed
       with_items:
         - epel-release
-        - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm
-        - http://www.pgpool.net/yum/rpms/3.5/redhat/rhel-7-x86_64/pgpool-II-release-3.5-1.noarch.rpm
+        - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-3.noarch.rpm
 
     - name: PostgreSQL 9.4 database server and python bindings
       yum: name={{ item }} state=latest
@@ -20,7 +19,7 @@
         - postgresql94-libs
         - postgresql94-odbc
         - postgresql94-server
-        - pgpool-II-pg94-extensions
+        - pgpool-II-94-extensions
         - python-psycopg2
 
     - name: initialize postgres database on initial master node
