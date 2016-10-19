@@ -39,6 +39,8 @@
 
     - role: irods-icat
 
+    - role: pgadmin
+
 - hosts: irods-resource
   become_user: root
 
