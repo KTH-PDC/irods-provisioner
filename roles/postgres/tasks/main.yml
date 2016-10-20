@@ -45,10 +45,13 @@
       service: name=postgresql-9.4 state=started
       when: ha_state == "master"
 
-    - name: configure postgres replication role
+    - name: configure postgres roles (superuser, replication)
       become: yes
       become_user: postgres
-      postgresql_user: name={{ replication_user }} password={{ replication_passwd }} role_attr_flags="LOGIN,REPLICATION" encrypted=yes
+      postgresql_user: name={{ item.role }} password={{ item.password }} role_attr_flags="LOGIN,REPLICATION" encrypted=yes
+      with_items:
+        - { role: "postgres", password: "{{ postgres_passwd }}" }
+        - { role: "{{ replication_user }}", password: "{{ replication_passwd }}" }
       when: ha_state == "master"
 
     - name: configure pgpool-II extensions for template1 on postgres master
