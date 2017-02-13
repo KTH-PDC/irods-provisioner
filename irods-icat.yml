@@ -41,6 +41,8 @@
 
     - role: pgadmin
 
+    - role: emc-metalnx-rmd
+
 - hosts: irods-resource
   become_user: root
 
@@ -48,3 +50,5 @@
     - role: irods-resource
 
     - role: davrods
+
+    - role: emc-metalnx-rmd
