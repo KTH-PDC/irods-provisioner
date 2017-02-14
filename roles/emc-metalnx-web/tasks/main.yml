@@ -1,0 +1,7 @@
+# irods-provisioner
+#
+# roles/emc-metalnx-web/tasks/main.yml - Ansible task for configuring EMC MetaLnx web interface 
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
