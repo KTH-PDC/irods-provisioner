@@ -52,3 +52,9 @@
     - role: davrods
 
     - role: emc-metalnx-rmd
+
+- hosts: irods-frontend
+  become_user: root
+
+  roles:
+    - role: emc-metalnx-web

@@ -11,3 +11,6 @@ rodsmaster2
 rodsresc1
 rodsresc2
 rodsresc3
+
+[irods-frontend]
+rodsfront1

@@ -1,0 +1,18 @@
+# irods-icat-provisioner
+#
+# host_vars/rodsfront1 - host configuration file for host rodsfront1
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+# host management setup
+ansible_connection: ssh
+ansible_host: 192.168.56.25
+ansible_user: vagrant
+ansible_ssh_private_key_file: .vagrant/machines/rodsfront1/virtualbox/private_key
+
+# private network setup
+ha_netif: eth2
+ha_ipaddr: 10.13.37.25
+ha_netmask: 255.255.255.0
+
+# postgres ha
+ha_state: master
