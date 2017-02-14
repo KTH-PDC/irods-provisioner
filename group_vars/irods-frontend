@@ -25,3 +25,6 @@ healthcheck_user: healthcheck
 healthcheck_passwd: 0nksp0ssuja
 healthcheck_db: healthcheck
 
+# postgres replication role configuration
+replication_user: replication
+replication_passwd: kl00nip0ssu
