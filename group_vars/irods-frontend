@@ -28,3 +28,8 @@ healthcheck_db: healthcheck
 # postgres replication role configuration
 replication_user: replication
 replication_passwd: kl00nip0ssu
+
+# metalnx-web configuration
+metalnx_db_user: metalnx
+metalnx_db_passwd: emc&irods#1
+metalnx_db: metalnx

@@ -5,3 +5,23 @@
 
 ---
 
+  - name: Apache Tomcat
+    yum: name=tomcat state=latest
+
+  - name: EMC MetaLnx web application package (version 1.0.1)
+    yum: name=https://bintray.com/metalnx/rpm/download_file?file_path=emc-metalnx-webapp-1.0-246.noarch.rpm state=installed
+
+  - name: configure postgres role for metalnx-web
+    become: yes
+    become_user: postgres
+    postgresql_user: name={{ metalnx_db_user }} password={{ metalnx_db_passwd }} role_attr_flags="LOGIN"
+    when: ha_state == "master"
+
+  - name: configure postgres database for metalnx-web
+    become: yes
+    become_user: postgres
+    postgresql_db: name={{ metalnx_db }} owner={{ metalnx_db_user }} encoding="UTF-8" template="template1" login_user="postgres"
+    when: ha_state == "master"
+
+
+
