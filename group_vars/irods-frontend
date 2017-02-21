@@ -33,3 +33,5 @@ replication_passwd: kl00nip0ssu
 metalnx_db_user: metalnx
 metalnx_db_passwd: emc&irods#1
 metalnx_db: metalnx
+metalnx_irods_host: rodsmaster1
+metalnx_irods_port: "
