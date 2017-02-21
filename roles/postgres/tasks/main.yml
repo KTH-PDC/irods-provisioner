@@ -9,27 +9,27 @@
       yum: name={{ item }} state=installed
       with_items:
         - epel-release
-        - http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-3.noarch.rpm
+        - http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-3.noarch.rpm
 
-    - name: PostgreSQL 9.4 database server and python bindings
+    - name: PostgreSQL 9.5 database server and python bindings
       yum: name={{ item }} state=latest
       with_items:
-        - postgresql94-debuginfo
-        - postgresql94-contrib
-        - postgresql94-libs
-        - postgresql94-odbc
-        - postgresql94-server
-        - pgpool-II-94-extensions
+        - postgresql95-debuginfo
+        - postgresql95-contrib
+        - postgresql95-libs
+        - postgresql95-odbc
+        - postgresql95-server
+        - pgpool-II-95-extensions
         - python-psycopg2
 
     - name: initialize postgres database on initial master node
-      command: "{{ postgres_prefix }}/bin/postgresql94-setup initdb"
+      command: "{{ postgres_prefix }}/bin/postgresql95-setup initdb"
       args:
         creates: "{{ postgres_datadir }}/postgresql.conf"
       when: ha_state == "master"
 
     - name: set postgres service enabled on database nodes
-      service: name=postgresql-9.4 enabled=yes
+      service: name=postgresql-9.5 enabled=yes
 
     - name: write postgresql configurations on postgres master
       become: yes
@@ -42,7 +42,7 @@
       notify: restart postgres
       
     - name: postgres service started on postgres master
-      service: name=postgresql-9.4 state=started
+      service: name=postgresql-9.5 state=started
       when: ha_state == "master"
 
     - name: configure postgres roles (superuser, replication)
@@ -77,6 +77,6 @@
       notify: restart postgres
 
     - name: postgres service started on postgres slave
-      service: name=postgresql-9.4 state=started
+      service: name=postgresql-9.5 state=started
       when: ha_state == "slave"
 

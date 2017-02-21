@@ -5,10 +5,10 @@
 
 # postgres base configuration
 postgres_port: 5432
-postgres_prefix: /usr/pgsql-9.4
+postgres_prefix: /usr/pgsql-9.5
 postgres_homedir: /var/lib/pgsql
-postgres_rootdir: /var/lib/pgsql/9.4
-postgres_datadir: /var/lib/pgsql/9.4/data
+postgres_rootdir: /var/lib/pgsql/9.5
+postgres_datadir: /var/lib/pgsql/9.5/data
 postgres_passwd: r00hr00h
 
 # postgres healthcheck role/database configuration

@@ -14,10 +14,10 @@ davrods_rx_buffer: 4096
 
 # postgres base configuration
 postgres_port: 5432
-postgres_prefix: /usr/pgsql-9.4
+postgres_prefix: /usr/pgsql-9.5
 postgres_homedir: /var/lib/pgsql
-postgres_rootdir: /var/lib/pgsql/9.4
-postgres_datadir: /var/lib/pgsql/9.4/data
+postgres_rootdir: /var/lib/pgsql/9.5
+postgres_datadir: /var/lib/pgsql/9.5/data
 postgres_passwd: r00hr00h
 
 # postgres healthcheck role/database configuration
@@ -34,4 +34,4 @@ metalnx_db_user: metalnx
 metalnx_db_passwd: emc&irods#1
 metalnx_db: metalnx
 metalnx_irods_host: rodsmaster1
-metalnx_irods_port: "
+#metalnx_irods_port: "
