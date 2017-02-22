@@ -5,11 +5,11 @@
 
 ---
 
-  - name: PostgreSQL 9.4 package repository
-    yum: name=http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-3.noarch.rpm state=present
+  - name: PostgreSQL 9.5 package repository
+    yum: name=http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-3.noarch.rpm state=present
 
   - name: pgAdmin 4 web application
-    yum: name=pgadmin4-web state=latest
+    yum: name=pgadmin4-v1-web state=latest
 
   - name: Apache WSGI module
     yum: name=mod_wsgi state=latest
@@ -21,7 +21,7 @@
     command: /usr/sbin/setsebool -P httpd_can_network_connect 1
 
   - name: pgAdmin service enabled and started
-    service: name=pgadmin4 enabled=yes state=started
+    service: name=pgadmin4-v1 enabled=yes state=started
 
   - name: httpd service enabled and started
     service: name=httpd enabled=yes state=started
