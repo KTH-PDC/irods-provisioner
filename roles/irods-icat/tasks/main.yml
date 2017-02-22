@@ -70,4 +70,4 @@
         - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
 
     - name: add role execution info to irods-provisioner manifest file
-      shell: echo "# role irods-icat provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
+      shell: echo "# role irods-icat provisioned successfully at {{ ansible_date_time.iso8601_micro }}, ha_state={{ ha_state }}" >> /etc/irods-provisioner.manifest
