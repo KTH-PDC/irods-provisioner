@@ -1,4 +1,6 @@
-<VirtualHost *>
+Listen 8008
+
+<VirtualHost *:8008>
 	     ProxyPass / http://localhost:5050/
 	     ProxyPassReverse / http://localhost:5050/
 </VirtualHost>
