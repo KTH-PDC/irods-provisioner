@@ -1,0 +1,35 @@
+# irods-provisioner
+#
+# group_vars/irods-icat - group variables for a single self-contained iRODS host 
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+# postgres base configuration
+postgres_port: 5432
+postgres_prefix: /usr/pgsql-9.5
+postgres_homedir: /var/lib/pgsql
+postgres_rootdir: /var/lib/pgsql/9.5
+postgres_datadir: /var/lib/pgsql/9.5/data
+postgres_passwd: r00hr00h
+
+# postgres healthcheck role/database configuration
+healthcheck_user: healthcheck
+healthcheck_passwd: 0nksp0ssuja
+healthcheck_db: healthcheck
+
+# postgres irods icat role/database configuration
+irods_icat_user: irods
+irods_icat_passwd: r0dsi@p0ssu
+irods_icat_db: irods-icat
+
+# postgres replication role configuration
+replication_user: replication
+replication_passwd: kl00nip0ssu
+
+# Davrods configuration
+davrods_vhost_port: 80
+davrods_irods_host: localhost
+davrods_auth_scheme: Native
+davrods_default_resc: "{{ irods_default_resc }}"
+davrods_exposed_root: Zone
+davrods_tx_buffer: 4096
+davrods_rx_buffer: 4096
