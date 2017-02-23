@@ -80,3 +80,5 @@
       service: name=postgresql-9.5 state=started
       when: ha_state == "slave"
 
+    - name: add role execution info to irods-provisioner manifest file
+      shell: echo "# role postgres provisioned successfully at {{ ansible_date_time.iso8601_micro }}, ha_state={{ ha_state }}" >> /etc/irods-provisioner.manifest

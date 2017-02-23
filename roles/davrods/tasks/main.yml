@@ -31,3 +31,6 @@
         - { srcfile: "../templates/davrods-vhost.conf.j2", destfile: "/etc/httpd/conf.d/davrods-vhost.conf" }
         - { srcfile: "../templates/davrods-irods_environment.json.j2", destfile: "/etc/httpd/irods/irods_environment.json" }
       notify: restart httpd
+
+    - name: add role execution info to irods-provisioner manifest file
+      shell: echo "# role davrods provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest

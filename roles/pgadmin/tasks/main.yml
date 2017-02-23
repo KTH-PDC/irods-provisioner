@@ -25,3 +25,6 @@
 
   - name: httpd service enabled and started
     service: name=httpd enabled=yes state=started
+
+  - name: add role execution info to irods-provisioner manifest file
+    shell: echo "# role pgadmin provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
