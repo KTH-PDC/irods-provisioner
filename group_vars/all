@@ -3,24 +3,3 @@
 # group_vars/all - global variables for the hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
 
-# iRODS cluster configuration
-irods_icat_master: rodsmaster1
-irods_icat_slave: rodsmaster2
-
-# iRODS configuration
-irods_home: /var/lib/irods
-irods_service_account: irods
-irods_service_group: irods
-irods_zone_name: tempZone
-irods_zone_port: 1247
-irods_xfer_port_min: 20000
-irods_xfer_port_max: 20199
-irods_temp_vault_dir: /var/lib/irods/iRODS/Vault
-irods_zone_key: TEMPORARY_zone_key
-irods_negotiation_key: TEMPORARY_32byte_negotiation_key
-irods_ctrl_port: 1248
-irods_ctrl_key: TEMPORARY__32byte_ctrl_plane_key
-irods_validation_url: https://schemas.irods.org/configuration
-irods_admin_user: rods
-irods_admin_passwd: rods
-irods_default_resc: demoResc
