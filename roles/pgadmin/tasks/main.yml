@@ -19,6 +19,7 @@
 
   - name: SElinux to allow httpd to reconnect (reverse proxy)
     command: /usr/sbin/setsebool -P httpd_can_network_connect 1
+    when: ansible_selinux['status'] != 'disabled'
 
   - name: pgAdmin service enabled and started
     service: name=pgadmin4-v1 enabled=yes state=started

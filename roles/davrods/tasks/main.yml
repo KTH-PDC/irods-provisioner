@@ -21,9 +21,11 @@
 
     - name: SELinux for Davrods - allow httpd to connect to iRODS
       command: "setsebool -P httpd_can_network_connect true"
+      when: ansible_selinux['status'] != 'disabled'
 
     - name: SELinux for Davrods - set correct context for iRODS network plugins
       command: "chcon -t lib_t /var/lib/irods/plugins/network/libtcp.so /var/lib/irods/plugins/network/libssl.so"
+      when: ansible_selinux['status'] != 'disabled'
 
     - name: Davrods configurations
       template: src={{ item.srcfile }} dest={{ item.destfile }} owner=root group=root mode=0644
