@@ -13,7 +13,11 @@
     "default_hash_scheme": "SHA256", 
     "default_resource_directory": "{{ irods_temp_vault_dir }}", 
     "default_resource_name": "demoResc", 
-    "environment_variables": {}, 
+    "environment_variables": {
+{% if irods_kerberos_keytab is defined %}
+        "KRB5_KTNAME": "{{ irods_kerberos_keytab }}"
+{% endif %}
+    }, 
     "federation": [], 
     "icat_host": "localhost", 
     "match_hash_policy": "compatible", 
@@ -42,9 +46,15 @@
     "server_port_range_end": {{ irods_xfer_port_max }}, 
     "server_port_range_start": {{ irods_xfer_port_min }}, 
     "xmsg_port": 1279, 
-    "zone_auth_scheme": "native", 
+    "zone_auth_scheme": "native",
+{% if irods_kerberos_keytab is defined %}
+    "KerberosKeytab": "{{ irods_kerberos_keytab }}",
+{% endif %}
+{% if irods_kerberos_principal is defined %}
+    "KerberosServicePrincipal": "{{ irods_kerberos_principal }}",
+{% endif %}
     "zone_key": "{{ irods_zone_key }}", 
     "zone_name": "{{ irods_zone_name }}", 
     "zone_port": {{ irods_zone_port }}, 
-    "zone_user": "{{ irods_admin_user }}"
+    "zone_user": "{{ irods_admin_user }}"  
 }
