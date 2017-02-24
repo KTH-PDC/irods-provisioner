@@ -6,6 +6,10 @@
 # Below we provide an example vhost configuration that enables davrods using
 # its default options.
 
+{% if davrods_vhost_port != 80 %}
+Listen {{ davrods_vhost_port }}
+{% endif %}
+
 <VirtualHost *:{{ davrods_vhost_port }}>
 
     # Enter your server name here.
