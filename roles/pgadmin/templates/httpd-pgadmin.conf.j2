@@ -3,6 +3,8 @@ Listen {{ pgadmin_vhost_port }}
 <VirtualHost *:{{ pgadmin_vhost_port }}>
 {% if pgadmin_vhost_ssl_enable == true %}
              SSLEngine on
+	     SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
+	     SSLProtocol all -SSLv2 -SSLv3
 {% endif %}
 {% if pgadmin_vhost_ssl_cert_file is defined %}
              SSLCertificateFile {{ pgadmin_vhost_ssl_cert_file }}
