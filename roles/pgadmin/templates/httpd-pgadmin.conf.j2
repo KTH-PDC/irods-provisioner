@@ -1,6 +1,18 @@
-Listen 8008
+Listen {{ pgadmin_vhost_port }}
 
-<VirtualHost *:8008>
+<VirtualHost *:{{ pgadmin_vhost_port }}>
+{% if pgadmin_vhost_ssl_enable == true %}
+             SSLEngine on
+{% endif %}
+{% if pgadmin_vhost_ssl_cert_file is defined %}
+             SSLCertificateFile {{ pgadmin_vhost_ssl_cert_file }}
+{% endif %}
+{% if pgadmin_vhost_ssl_chain_file is defined %}
+             SSLCertificateChainFile {{ pgadmin_vhost_ssl_chain_file }}
+{% endif %}
+{% if pgadmin_vhost_ssl_key_file is defined %}
+             SSLCertificateKeyFile {{ pgadmin_vhost_ssl_key_file }}
+{% endif %}
 	     ProxyPass / http://localhost:5050/
 	     ProxyPassReverse / http://localhost:5050/
 </VirtualHost>
