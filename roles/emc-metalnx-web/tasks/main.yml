@@ -14,7 +14,7 @@
   - name: configure postgres role for metalnx-web
     become: yes
     become_user: postgres
-    postgresql_user: name={{ metalnx_db_user }} password={{ metalnx_db_passwd }} role_attr_flags="LOGIN"
+    postgresql_user: name={{ metalnx_db_user }} password={{ metalnx_db_passwd }} role_attr_flags="LOGIN" encrypted=yes
     when: ha_state == "master"
 
   - name: configure postgres database for metalnx-web
