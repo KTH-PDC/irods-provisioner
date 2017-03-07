@@ -13,6 +13,7 @@
 {% if metalnx_vhost_ssl_key_file is defined %}
    SSLCertificateKeyFile {{ metalnx_vhost_ssl_key_file }}
 {% endif %}
+   ServerName {{ metalnx_vhost_name }}
    ProxyPass / http://localhost:8080/
    ProxyPassReverse / http://localhost:8080/
 </VirtualHost>

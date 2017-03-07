@@ -23,5 +23,8 @@
     postgresql_db: name={{ metalnx_db }} owner={{ metalnx_db_user }} encoding="UTF-8" template="template1" login_user="postgres"
     when: ha_state == "master"
 
+  - name: configure apache virtual host for reverse proxy
+    template: src=../templates/emc-metalnx-web.conf.j2 dest=/etc/httpd/conf.d/emc-metalnx-web.conf owner=root group=root mode=0644
+
   - name: add role execution info to irods-provisioner manifest file
     shell: echo "# role emc-metalnx-web provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
