@@ -12,6 +12,20 @@ Listen {{ davrods_vhost_port }}
 
 <VirtualHost *:{{ davrods_vhost_port }}>
 
+{% if davrods_vhost_ssl_enable == true %}
+    SSLEngine on
+{% endif %}
+
+{% if davrods_vhost_ssl_cert_file is defined %}
+    SSLCertificateFile {{ davrods_vhost_ssl_cert_file }}
+{% endif %}
+{% if davrods_vhost_ssl_chain_file is defined %}
+    SSLCertificateChainFile {{ davrods_vhost_ssl_chain_file }}
+{% endif %}
+{% if davrods_vhost_ssl_key_file is defined %}
+    SSLCertificateKeyFile {{ davrods_vhost_ssl_key_file }}
+{% endif %}
+
     # Enter your server name here.
     ServerName {{ ansible_nodename }}
 
