@@ -13,6 +13,15 @@
     "irods_encryption_num_hash_rounds": 16,
     "irods_encryption_algorithm": "AES-256-CBC",
     "irods_default_hash_scheme": "SHA256",
+{% if irods_ssl_cert_file is defined %}
+    "irods_ssl_certificate_chain_file": "{{ irods_ssl_cert_file }}",
+{% endif %}
+{% if irods_ssl_key_file is defined %}
+    "irods_ssl_certificate_key_file": "{{ irods_ssl_key_file }}",
+{% endif %}
+{% if irods_ssl_dh_params_file is defined %}
+    "irods_ssl_dh_params_file": "{{ irods_ssl_dh_params_file }}",
+{% endif %}
     "irods_match_hash_policy": "compatible",
     "irods_server_control_plane_port": {{ irods_ctrl_port }},
     "irods_server_control_plane_key": "{{ irods_ctrl_key }}",
