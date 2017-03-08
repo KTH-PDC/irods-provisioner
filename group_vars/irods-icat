@@ -25,3 +25,6 @@ irods_icat_db: irods-icat
 replication_user: replication
 replication_passwd: kl00nip0ssu
 
+# pgadmin configuration
+pgadmin_vhost_port: 8008
+pgadmin_vhost_ssl_enable: false

@@ -25,4 +25,7 @@ metalnx_db_user: metalnx
 metalnx_db_passwd: emc&irods#1
 metalnx_db: metalnx
 metalnx_irods_host: "{{ irods_icat_master }}"
-#metalnx_irods_port:
+metalnx_vhost_port: 80
+metalnx_vhost_name: "{{ ansible_nodename }}"
+metalnx_vhost_ssl_enable: false
+
