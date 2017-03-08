@@ -26,5 +26,9 @@
   - name: configure apache virtual host for reverse proxy
     template: src=../templates/emc-metalnx-web.conf.j2 dest=/etc/httpd/conf.d/emc-metalnx-web.conf owner=root group=root mode=0644
 
+  - name: SELinux for emc-metalnx-web - allow httpd to connect to tomcat port 8080
+    command: "setsebool -P httpd_can_network_connect true"
+    when: ansible_selinux['status'] != 'disabled'
+
   - name: add role execution info to irods-provisioner manifest file
     shell: echo "# role emc-metalnx-web provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
