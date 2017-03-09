@@ -29,3 +29,5 @@ metalnx_vhost_port: 80
 metalnx_vhost_name: "{{ ansible_nodename }}"
 metalnx_vhost_ssl_enable: false
 
+# b2stage-gridftp configuration
+b2stage_irods_dsi_path: /opt/iRODS_DSI
