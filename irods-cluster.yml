@@ -68,3 +68,5 @@
     - role: postgres
 
     - role: emc-metalnx-web
+
+    - role: b2stage-gridftp
