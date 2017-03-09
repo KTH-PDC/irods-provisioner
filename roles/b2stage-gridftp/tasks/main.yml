@@ -1,0 +1,11 @@
+# irods-provisioner
+#
+# roles/b2stage-gridftp/tasks/main.yml - Ansible playbook for configuring an EUDAT B2STAGE GridFTP for iRODS
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+
+---
+
+    - name: iRODS runtime (version 4.1.10)
+      yum: name={{ item }} state=installed
+      with_items:
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
