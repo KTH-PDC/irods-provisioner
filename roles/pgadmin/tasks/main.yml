@@ -2,6 +2,9 @@
 #
 # roles/pgadmin/tasks/main.yml - Ansible playbook for configuring a pgAdmin application
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
 
 ---
 

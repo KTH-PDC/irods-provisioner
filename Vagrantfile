@@ -2,6 +2,9 @@
 #
 # Vagrantfile - manifest file for Vagrant to provision virtual machines
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
 
 # JSON array for the Vagrants to be configured
 boxes = [

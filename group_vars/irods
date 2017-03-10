@@ -2,6 +2,9 @@
 #
 # group_vars/irods - global variables for the iRODS grid hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
 
 # iRODS cluster configuration
 irods_icat_master: rodsmaster1

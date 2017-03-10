@@ -2,6 +2,9 @@
 #
 # host_vars/rodsresc2 - host configuration file for host rodsresc2
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
 
 # host management setup
 ansible_connection: ssh

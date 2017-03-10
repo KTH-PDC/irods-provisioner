@@ -1,7 +1,10 @@
 # irods-provisioner
-
+#
 # roles/davrods/handlers/main.yml - define event handers for davrods role
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
 
 ---
 

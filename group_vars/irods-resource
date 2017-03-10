@@ -2,6 +2,9 @@
 #
 # group_vars/irods-resource - group variables for the iRODS resource hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
 
 # Davrods configuration
 davrods_vhost_port: 80
