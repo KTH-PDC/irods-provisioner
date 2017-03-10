@@ -1,0 +1,12 @@
+# irods-provisioner
+#
+# roles/emc-metalnx-web/handlers/main.yml - define event handers for emc-metalnx-web role
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+---
+
+  - name: restart httpd
+      service: name=httpd state=restarted
