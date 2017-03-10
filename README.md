@@ -23,16 +23,16 @@ This should configure the virtual machines with a complete iRODS data grid.
 
 To use the provided default configuration add the following to your hosts file i.e `/etc/hosts`
 
-       192.168.56.20     rodsmaster1
-       192.168.56.21     rodsmaster2
-       192.168.56.22     rodsresc1
-       192.168.56.23     rodsresc2
-       192.168.56.24     rodsresc3
-       192.168.56.25     rodsfront1
+	192.168.56.20     rodsmaster1
+	192.168.56.21     rodsmaster2
+	192.168.56.22     rodsresc1
+	192.168.56.23     rodsresc2
+	192.168.56.24     rodsresc3
+	192.168.56.25     rodsfront1
 
 and configure your `~/.irods/irods_environment.json` as
 
-    {
+	{
 	"irods_zone_name": "tempZone",
 	"irods_host": "rodsmaster1",
 	"irods_user_name": "rods",
@@ -54,6 +54,6 @@ and configure your `~/.irods/irods_environment.json` as
 	"irods_server_control_plane_key": "TEMPORARY__32byte_ctrl_plane_key",
 	"irods_server_control_plane_encryption_num_hash_rounds": 16,
 	"irods_server_control_plane_encryption_algorithm": "AES-256-CBC"
-    }
+	}
 											       
 		
