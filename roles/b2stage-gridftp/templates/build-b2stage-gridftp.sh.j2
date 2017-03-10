@@ -1,0 +1,9 @@
+#!/bin/sh
+
+GITREPO={{ b2stage_gridftp_repo }}
+BUILDROOT={{ b2stage_gridftp_buildroot }}
+export C_INCLUDEPATH={{ b2stage_gridftp_includepath }}
+
+git clone $GITREPO $BUILDROOT
+(cd $BUILDROOT; make install)
+
