@@ -27,3 +27,11 @@
         - globus-gridmap-callout-error-devel
         - libcurl-devel
         - openssl-devel
+
+    - name: b2stage-gridftp build script
+      template: src=../templates/build-b2stage-gridftp.sh.j2 dest=/tmp/build-b2stage-gridftp.sh owner=root group=root mode=0755
+
+    - name: b2stage-gridftp build
+      shell: /tmp/build-b2stage-gridftp.sh
+      args:
+        creates: /opt/iRODS_DSI/libglobus_gridftp_server_iRODS.so

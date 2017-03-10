@@ -30,7 +30,9 @@ metalnx_vhost_name: "{{ ansible_nodename }}"
 metalnx_vhost_ssl_enable: false
 
 # b2stage-gridftp configuration
-b2stage_gridftp_dsi_path: /opt/iRODS_DSI
 b2stage_gridftp_repo: https://github.com/EUDAT-B2STAGE/B2STAGE-GridFTP
 b2stage_gridftp_buildroot: /tmp/B2STAGE-GridFTP
 b2stage_gridftp_includepath: /usr/include/globus
+b2stage_gridftp_globus_prefix: /usr
+b2stage_gridftp_irods_prefix: /usr
+b2stage_gridftp_dest_path: /opt/iRODS_DSI

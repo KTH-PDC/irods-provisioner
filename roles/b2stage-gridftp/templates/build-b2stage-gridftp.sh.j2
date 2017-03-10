@@ -2,8 +2,13 @@
 
 GITREPO={{ b2stage_gridftp_repo }}
 BUILDROOT={{ b2stage_gridftp_buildroot }}
+
 export C_INCLUDEPATH={{ b2stage_gridftp_includepath }}
+export GLOBUS_LOCATION={{ b2stage_gridftp_globus_prefix }}
+export IRODS_PATH={{ b2stage_gridftp_irods_prefix }}
+export DEST_LIB_DIR={{ b2stage_gridftp_dest_path }}
+export DEST_BIN_DIR={{ b2stage_gridftp_dest_path }}
+export DEST_ETC_DIR={{ b2stage_gridftp_dest_path }}
 
 git clone $GITREPO $BUILDROOT
 (cd $BUILDROOT; make install)
-
