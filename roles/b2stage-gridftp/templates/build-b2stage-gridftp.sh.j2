@@ -11,4 +11,4 @@ export DEST_BIN_DIR={{ b2stage_gridftp_dest_path }}
 export DEST_ETC_DIR={{ b2stage_gridftp_dest_path }}
 
 git clone $GITREPO $BUILDROOT
-(cd $BUILDROOT; make install)
+(cd $BUILDROOT; cmake CMakeLists.txt; make install)
