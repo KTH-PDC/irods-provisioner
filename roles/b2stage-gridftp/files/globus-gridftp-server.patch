@@ -2,9 +2,9 @@
  #                    transfer.
   ### END INIT INFO
 
--LD_PRELOAD="$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libglobus_gridftp_server.so:/opt/iRODS_DSI/libglobus_gridftp_server_iRODS.so"
--export LD_PRELOAD
--
++LD_PRELOAD="$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libglobus_gridftp_server.so:/opt/iRODS_DSI/libglobus_gridftp_server_iRODS.so"
++export LD_PRELOAD
++
  # source function library
   . /etc/init.d/functions
   
