@@ -1,0 +1,23 @@
+# irods-provisioner
+#
+# roles/b2stage-gridftp/templates/b2stage-gridftp.conf.j2
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+# globus-gridftp-server configuration file
+
+# this is a comment
+
+# option names beginning with '$' will be set as environment variables, e.g.
+# $GLOBUS_ERROR_VERBOSE 1
+# $GLOBUS_TCP_PORT_RANGE 50000,51000
+
+# port
+port 2811
+
+$LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/opt/iRODS_DSI"
+$irodsConnectAsAdmin "rods"
+load_dsi_module iRODS
+auth_level 4
