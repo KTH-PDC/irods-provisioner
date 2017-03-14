@@ -9,4 +9,4 @@
 ---
 
   - name: restart httpd
-      service: name=httpd state=restarted
+    service: name=httpd state=restarted
