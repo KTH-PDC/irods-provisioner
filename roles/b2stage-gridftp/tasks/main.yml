@@ -38,3 +38,9 @@
       shell: /tmp/build-b2stage-gridftp.sh
       args:
         creates: /opt/iRODS_DSI/libglobus_gridftp_server_iRODS.so
+
+    - name: globus-gridftp-server configuration
+      template: src=../templates/b2stage-gridftp.conf.j2 dest=/etc/gridftp.conf owner=root group=root mode=0755
+
+#    - name: globus-gridftp-server init for iRODS DSI
+#      patch: src=globus-gridftp-server.patch dest=/etc/init.d/globus-gridftp-server
