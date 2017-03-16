@@ -24,4 +24,6 @@
    ServerName {{ metalnx_vhost_name }}
    ProxyPass / http://localhost:8080/
    ProxyPassReverse / http://localhost:8080/
+   RewriteEngine on
+   RewriteRule ^/$ /emc-metalnx-web/login/ [R]
 </VirtualHost>
