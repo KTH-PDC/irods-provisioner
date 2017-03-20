@@ -42,6 +42,13 @@
         - httpd
         - php
 
+- hosts: irods
+  become_user: root
+
+  roles:
+    - role: ipa-client
+
+
 - hosts: irods-icat
   become_user: root
   
@@ -73,3 +80,9 @@
     - role: emc-metalnx-web
 
     - role: b2stage-gridftp
+
+- hosts: irods-idm
+  become_user: root
+
+  roles:
+    - role: ipa-server

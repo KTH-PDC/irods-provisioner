@@ -1,0 +1,15 @@
+# irods-provisioner
+#
+# roles/ipa-client/tasks/main.yml - Ansible playbook for configuring an FreeIPA Authentication/IdM client
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+---
+
+    - name: IPA client packages
+      yum: name={{ item }} state=latest
+      with_items:
+        - ipa-client
+        - ipa-client-common
