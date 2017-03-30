@@ -75,6 +75,10 @@
   become_user: root
 
   roles:
+    - role: irods-client
+
+    - role: davrods
+
     - role: postgres
 
     - role: emc-metalnx-web

@@ -39,3 +39,13 @@ b2stage_gridftp_includepath: /usr/include/globus
 b2stage_gridftp_globus_prefix: /usr
 b2stage_gridftp_irods_prefix: /usr
 b2stage_gridftp_dest_path: /opt/iRODS_DSI
+
+# Davrods configuration
+davrods_vhost_port: 80
+davrods_vhost_ssl_enable: false
+davrods_irods_host: "{{ irods_icat_master }}"
+davrods_auth_scheme: Native
+davrods_default_resc: "{{ irods_default_resc }}"
+davrods_exposed_root: Zone
+davrods_tx_buffer: 4096
+davrods_rx_buffer: 4096
