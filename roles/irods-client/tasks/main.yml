@@ -1,0 +1,20 @@
+# irods-provisioner
+#
+# roles/irods-client/tasks/main.yml - Ansible playbook for configuring an iRODS client
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+---
+
+    - name: required package repositories
+      yum: name={{ item }} state=installed
+      with_items:
+        - epel-release
+
+    - name: iRODS packages (version 4.1.10)
+      yum: name={{ item }} state=installed
+      with_items:
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-icommands-4.1.10-centos7-x86_64.rpm
