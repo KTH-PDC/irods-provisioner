@@ -31,12 +31,8 @@
         {
             "filename": "core"
         }
-    ], 
-    "re_rulebase_set": [
-        {
-            "filename": "core"
-        }
-    ], 
+    ],
+    "re_rulebase_set": {{ irods_rulebase_set | to_json }},
     "schema_validation_base_uri": "{{ irods_validation_url }}", 
     "server_control_plane_encryption_algorithm": "AES-256-CBC", 
     "server_control_plane_encryption_num_hash_rounds": 16, 
