@@ -41,6 +41,7 @@
         - python-psycopg2
         - httpd
         - php
+        - git
 
 - hosts: irods
   become_user: root
