@@ -13,7 +13,17 @@
       with_items:
         - epel-release
 
+    - name: nagios packages
+      yum: name={{ item }} state=latest
+      with_items:
+        - nagios
+        - nagios-common
+        - nagios-plugins
+
     - name: iRODS packages (version 4.1.10)
       yum: name={{ item }} state=installed
       with_items:
         - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
+
+    - name: add role execution info to irods-provisioner manifest file
+      shell: echo "# role irods-nagios provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
