@@ -1,0 +1,19 @@
+# irods-provisioner
+#
+# roles/irods-nagios/tasks/main.yml - Ansible playbook for configuring a Nagios monitoring service for iRODS
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+---
+
+    - name: required package repositories
+      yum: name={{ item }} state=installed
+      with_items:
+        - epel-release
+
+    - name: iRODS packages (version 4.1.10)
+      yum: name={{ item }} state=installed
+      with_items:
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
