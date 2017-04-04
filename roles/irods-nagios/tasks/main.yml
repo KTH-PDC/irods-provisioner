@@ -29,6 +29,10 @@
       command: "setsebool -P httpd_can_network_connect true"
       when: ansible_selinux['status'] != 'disabled'
 
+    - name: SELinux for nagios - permissive mode required!
+      selinux: policy=targeted state=permissive
+      when: ansible_selinux['status'] != 'disabled'
+
     - name: nagios service enabled and started
       service: name=nagios enabled=yes state=started
 
