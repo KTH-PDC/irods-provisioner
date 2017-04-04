@@ -20,6 +20,18 @@
         - nagios-common
         - nagios-plugins
 
+    - name: nagios plugins
+      yum: name={{ item }} state=latest
+      with_items:
+        - nagios-plugins-ping
+        - nagios-plugins-load
+        - nagios-plugins-users
+        - nagios-plugins-http
+        - nagios-plugins-disk
+        - nagios-plugins-ssh
+        - nagios-plugins-swap
+        - nagios-plugins-procs
+
     - name: iRODS packages (version 4.1.10)
       yum: name={{ item }} state=installed
       with_items:
