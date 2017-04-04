@@ -25,5 +25,15 @@
       with_items:
         - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
 
+    - name: SELinux for nagios - allow httpd to connect to nagios
+      command: "setsebool -P httpd_can_network_connect true"
+      when: ansible_selinux['status'] != 'disabled'
+
+    - name: nagios service enabled and started
+      service: name=nagios enabled=yes state=started
+
+    - name: httpd service enabled and started
+      service: name=httpd enabled=yes state=started
+
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-nagios provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
