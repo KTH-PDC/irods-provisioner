@@ -48,11 +48,14 @@
       selinux: policy=targeted state=permissive
       when: ansible_selinux['status'] != 'disabled'
 
-    - name: nagios service enabled and started
-      service: name=nagios enabled=yes state=started
+    - name: nagios irods configuration
+      template: src=../templates/nagios-irods.cfg.j2 dest=/etc/nagios/conf.d/irods.cfg owner=nagios group=nagios mode=0644
 
-    - name: httpd service enabled and started
-      service: name=httpd enabled=yes state=started
+    - name: nagios service enabled and (re)started
+      service: name=nagios enabled=yes state=restarted
+
+    - name: httpd service enabled and (re)started
+      service: name=httpd enabled=yes state=restarted
 
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-nagios provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
