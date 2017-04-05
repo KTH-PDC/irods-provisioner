@@ -1,0 +1,45 @@
+define host {
+    name             irods-host
+    use              generic-host 
+    check_interval   1
+    register         0
+}
+
+define host {
+    use              irods-host
+    host_name        rodsresc1
+    alias            rodsresc1 
+    address          rodsresc1 
+}
+
+define host {
+    use              irods-host
+    host_name        rodsresc2
+    alias            rodsresc2
+    address          rodsresc2
+}
+
+define hostgroup{
+    hostgroup_name   irods-hosts 
+    alias            iRODS Server Hosts
+    members          rodsresc1,rodsresc2
+}
+
+define command{
+    command_name     iping-irods-server
+    command_line     /usr/lib/nagios/plugins/iping.sh -h $HOSTADDRESS$ -p $ARG1$ 
+}
+
+define command {
+    command_name     update-irods-resource-state 
+    command_line     /usr/lib/nagios/plugins/update_irods_resc_state.sh $HOSTADDRESS$ $SERVICESTATE$ $SERVICESTATETYPE$ $SERVICEATTEMPT$
+}
+
+define service {
+    use                     generic-service
+    hostgroups              irods-hosts 
+    service_description     IPING 
+    check_command           iping-irods-server!1247
+    check_interval          1
+    event_handler           update-irods-resource-state
+}
