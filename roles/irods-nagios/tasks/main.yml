@@ -40,6 +40,12 @@
     - name: iRODS iping for nagios
       yum: name=https://github.com/KTH-PDC/rit-irods-clients/releases/download/1.0.0/rit-irods-clients-1.0.0-1.x86_64.rpm state=installed
 
+    - name: iRODS plugins for nagios
+      copy: src={{ item.srcfile }} dest={{ item.destfile }} owner=root group=root mode=0755
+      with_items:
+        - { srcfile: "nagios-iping.sh", destfile: "/usr/lib64/nagios/plugins/iping.sh" }
+        - { srcfile: "nagios-update_irods_resc_state.sh", destfile: "/usr/lib64/nagios/plugins/update_irods_resc_state.sh" }
+
     - name: SELinux for nagios - allow httpd to connect to nagios
       command: "setsebool -P httpd_can_network_connect true"
       when: ansible_selinux['status'] != 'disabled'
