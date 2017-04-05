@@ -6,7 +6,14 @@ define host {
     register		0
 }
 
-{% for host in groups['irods'] %}
+define host {
+    use		     irods-server
+    host_name	     {{ ansible_nodename }}
+    alias	     {{ ansible_nodename }}
+    address	     {{ ansible_nodename }}
+}
+
+{% for host in groups['irods-resource'] %}
 
 define host {
     use              irods-server
@@ -17,10 +24,16 @@ define host {
 
 {% endfor %}
 
-define hostgroup{
-    hostgroup_name   irods-servers
-    alias            iRODS Servers
-    members          {{ groups["irods"] | join(",") }}
+define hostgroup {
+    hostgroup_name   irods-resource
+    alias            iRODS Resource Servers
+    members          {{ groups['irods-resource'] | join(',') }}
+}
+
+define hostgroup {
+    hostgroup_name   irods-icat
+    alias 	     iRODS Catalog Services (iCAT)
+    members	     {{ ansible_nodename }}
 }
 
 define command{
@@ -35,8 +48,8 @@ define command {
 
 define service {
     use                     generic-service
-    hostgroups              irods-servers
-    service_description     IPING 
+    hostgroups              irods-resource,irods-icat
+    service_description     IPING
     check_command           iping-irods-server!1247
     check_interval          1
     event_handler           update-irods-resource-state
