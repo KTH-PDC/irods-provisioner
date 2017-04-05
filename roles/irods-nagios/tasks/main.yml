@@ -37,6 +37,9 @@
       with_items:
         - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
 
+    - name: iRODS iping for nagios
+      yum: name=https://github.com/KTH-PDC/rit-irods-clients/releases/download/1.0.0/rit-irods-clients-1.0.0-1.x86_64.rpm state=installed
+
     - name: SELinux for nagios - allow httpd to connect to nagios
       command: "setsebool -P httpd_can_network_connect true"
       when: ansible_selinux['status'] != 'disabled'
