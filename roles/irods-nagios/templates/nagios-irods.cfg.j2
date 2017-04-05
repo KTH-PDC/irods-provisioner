@@ -1,8 +1,9 @@
 define host {
-    name             irods-host
-    use              generic-host 
-    check_interval   1
-    register         0
+    name		irods-host
+    use              	generic-host
+    max_check_attempts	120
+    check_interval	1
+    register		0
 }
 
 define host {
@@ -27,12 +28,12 @@ define hostgroup{
 
 define command{
     command_name     iping-irods-server
-    command_line     /usr/lib/nagios/plugins/iping.sh -h $HOSTADDRESS$ -p $ARG1$ 
+    command_line     /usr/lib64/nagios/plugins/iping.sh -h $HOSTADDRESS$ -p $ARG1$ 
 }
 
 define command {
     command_name     update-irods-resource-state 
-    command_line     /usr/lib/nagios/plugins/update_irods_resc_state.sh $HOSTADDRESS$ $SERVICESTATE$ $SERVICESTATETYPE$ $SERVICEATTEMPT$
+    command_line     /usr/lib64/nagios/plugins/update_irods_resc_state.sh $HOSTADDRESS$ $SERVICESTATE$ $SERVICESTATETYPE$ $SERVICEATTEMPT$
 }
 
 define service {
