@@ -57,6 +57,18 @@
     - name: nagios irods configuration
       template: src=../templates/nagios-irods.cfg.j2 dest=/etc/nagios/conf.d/irods.cfg owner=nagios group=nagios mode=0644
 
+    - name: nagios user iRODS environment directory
+      file: path=/var/spool/nagios/.irods state=directory owner=nagios group=nagios mode=0700
+
+    - name: nagios user iRODS environment
+      template: src=../../../templates/irods-irods_environment.json.j2 dest=/var/spool/nagios/.irods/irods_environment.json owner=nagios group=nagios
+
+    - name: nagios iRODS authentication file
+      shell: cp {{ irods_home }}/.irods/.irodsA /var/spool/nagios/.irods/
+      args:
+        creates: /var/spool/nagios/.irods/.irodsA
+      when: ha_state == 'master'
+
     - name: nagios service enabled and (re)started
       service: name=nagios enabled=yes state=restarted
 
