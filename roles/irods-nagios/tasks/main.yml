@@ -58,7 +58,7 @@
       template: src=../templates/nagios-sudoers.j2 dest=/etc/sudoers.d/nagios owner=root group=root mode=0600
 
     - name: nagios irods resource state change script
-      template: src=../templates/nagios-update_irods_resc_state.sh.j2 dest=/usr/lib64/nagios/plugins/update_irods_resc_state.sh.j2 owner=root group=root mode=0755
+      template: src=../templates/nagios-update_irods_resc_state.sh.j2 dest=/usr/lib64/nagios/plugins/update_irods_resc_state.sh owner=root group=root mode=0755
 
     - name: irods resource state change interface script
       copy: src=irods-update_irods_resc_state.sh dest={{ irods_home }}/iRODS/scripts/update_irods_resc_state.sh owner={{ irods_service_account }} group={{ irods_service_group }} mode=0755
