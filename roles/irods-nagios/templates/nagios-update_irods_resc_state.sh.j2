@@ -1,0 +1,28 @@
+#/bin/bash
+
+LOGFILE=/var/log/nagios/update_irods_resc_state.log
+
+echo "$0: invoked from nagios with params: $@" >> $LOGFILE
+
+HOST=$1
+SERVICE_STATE=$2
+SERVICE_STATE_TYPE=$3
+SERVICE_ATTEMPT=$4
+
+echo "$0: iRODS service state at host $HOST is $SERVICE_STATE" >> $LOGFILE
+
+case "$SERVICE_STATE" in
+    OK)
+	echo "$0: executing iRODS super user action to enable all resources at $HOST..." >> $LOGFILE
+        sudo -u {{ irods_service_account }} /var/lib/irods/iRODS/scripts/update_irods_resc_state.sh $HOST $SERVICE_STATE
+	;;
+    WARNING)
+	;;
+    UNKNOWN)
+	;;
+    CRITICAL)
+	echo "$0: executing iRODS super user action to disable all sesources at $HOST..." >> $LOGFILE
+        sudo -u {{ irods_service_account }} /var/lib/irods/iRODS/scripts/update_irods_resc_state.sh $HOST $SERVICE_STATE
+	;;
+esac
+exit 0
