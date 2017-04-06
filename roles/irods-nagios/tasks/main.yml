@@ -40,11 +40,8 @@
     - name: iRODS iping for nagios
       yum: name=https://github.com/KTH-PDC/rit-irods-clients/releases/download/1.0.0/rit-irods-clients-1.0.0-1.x86_64.rpm state=installed
 
-    - name: iRODS plugins for nagios
-      copy: src={{ item.srcfile }} dest={{ item.destfile }} owner=root group=root mode=0755
-      with_items:
-        - { srcfile: "nagios-iping.sh", destfile: "/usr/lib64/nagios/plugins/iping.sh" }
-        - { srcfile: "nagios-update_irods_resc_state.sh", destfile: "/usr/lib64/nagios/plugins/update_irods_resc_state.sh" }
+    - name: iRODS iping plugin for nagios
+      copy: src="nagios-iping.sh" dest="/usr/lib64/nagios/plugins/iping.sh" owner=root group=root mode=0755
 
     - name: SELinux for nagios - allow httpd to connect to nagios
       command: "setsebool -P httpd_can_network_connect true"
@@ -56,6 +53,15 @@
 
     - name: nagios irods configuration
       template: src=../templates/nagios-irods.cfg.j2 dest=/etc/nagios/conf.d/irods.cfg owner=nagios group=nagios mode=0644
+
+    - name: nagios sudo configuration for irods resource management
+      template: src=../templates/nagios-sudoers.j2 dest=/etc/sudoers.d/nagios owner=root group=root mode=0600
+
+    - name: nagios irods resource state change script
+      template: src=../templates/nagios-update_irods_resc_state.sh.j2 dest=/usr/lib64/nagios/plugins/update_irods_resc_state.sh.j2 owner=root group=root mode=0755
+
+    - name: irods resource state change interface script
+      copy: src=irods-update_irods_resc_state.sh dest={{ irods_home }}/iRODS/scripts/update_irods_resc_state.sh owner={{ irods_service_account }} group={{ irods_service_group }} mode=0755
 
     - name: nagios service enabled and (re)started
       service: name=nagios enabled=yes state=restarted
