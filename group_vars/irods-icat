@@ -31,3 +31,7 @@ replication_passwd: kl00nip0ssu
 # pgadmin configuration
 pgadmin_vhost_port: 8008
 pgadmin_vhost_ssl_enable: false
+
+# nagios configuration
+nagios_vhost_port: 80
+nagios_vhost_ssl_enable: false
