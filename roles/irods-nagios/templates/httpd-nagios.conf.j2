@@ -6,20 +6,16 @@
 # Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
-ScriptAlias /nagios/cgi-bin/ "/usr/lib64/nagios/cgi-bin/"
-
 {% if nagios_vhost_port != 80 %}
 Listen {{ nagios_vhost_port }}
 {% endif %}
 
 <VirtualHost *:{{ nagios_vhost_port }}>
-
 {% if nagios_vhost_ssl_enable == true %}
     SSLEngine on
     SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
     SSLProtocol all -SSLv2 -SSLv3
 {% endif %}
-
 {% if nagios_vhost_ssl_cert_file is defined %}
     SSLCertificateFile {{ davrods_vhost_ssl_cert_file }}
 {% endif %}
@@ -29,6 +25,7 @@ Listen {{ nagios_vhost_port }}
 {% if nagios_vhost_ssl_key_file is defined %}
     SSLCertificateKeyFile {{ nagios_vhost_ssl_key_file }}
 {% endif %}
+    ScriptAlias /nagios/cgi-bin/ "/usr/lib64/nagios/cgi-bin/"
 
     <Directory "/usr/lib64/nagios/cgi-bin/">
     #  SSLRequireSSL
