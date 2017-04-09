@@ -14,11 +14,27 @@ Listen {{ nagios_vhost_port }}
 
 <VirtualHost *:{{ nagios_vhost_port }}>
 
-<Directory "/usr/lib64/nagios/cgi-bin/">
-#  SSLRequireSSL
-   Options ExecCGI
-   AllowOverride None
-   <IfVersion >= 2.3>
+{% if nagios_vhost_ssl_enable == true %}
+    SSLEngine on
+    SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
+    SSLProtocol all -SSLv2 -SSLv3
+{% endif %}
+
+{% if nagios_vhost_ssl_cert_file is defined %}
+    SSLCertificateFile {{ davrods_vhost_ssl_cert_file }}
+{% endif %}
+{% if nagios_vhost_ssl_chain_file is defined %}
+    SSLCertificateChainFile {{ nagios_vhost_ssl_chain_file }}
+{% endif %}
+{% if nagios_vhost_ssl_key_file is defined %}
+    SSLCertificateKeyFile {{ nagios_vhost_ssl_key_file }}
+{% endif %}
+
+    <Directory "/usr/lib64/nagios/cgi-bin/">
+    #  SSLRequireSSL
+    Options ExecCGI
+    AllowOverride None
+    <IfVersion >= 2.3>
       <RequireAll>
          Require all granted
 #        Require host 127.0.0.1
@@ -41,11 +57,11 @@ Listen {{ nagios_vhost_port }}
       AuthUserFile /etc/nagios/passwd
       Require valid-user
    </IfVersion>
-</Directory>
+   </Directory>
 
-Alias /nagios "/usr/share/nagios/html"
+   Alias /nagios "/usr/share/nagios/html"
 
-<Directory "/usr/share/nagios/html">
+   <Directory "/usr/share/nagios/html">
 #  SSLRequireSSL
    Options None
    AllowOverride None
@@ -72,6 +88,6 @@ Alias /nagios "/usr/share/nagios/html"
       AuthUserFile /etc/nagios/passwd
       Require valid-user
    </IfVersion>
-</Directory>
+   </Directory>
 
 </VirtualHost>
