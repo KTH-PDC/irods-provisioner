@@ -1,0 +1,77 @@
+# irods-provisioner
+#
+# roles/irods-nagios/templates/httpd-nagios.conf.j2 - apache httpd virtual host configuration template
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+ScriptAlias /nagios/cgi-bin/ "/usr/lib64/nagios/cgi-bin/"
+
+{% if nagios_vhost_port != 80 %}
+Listen {{ nagios_vhost_port }}
+{% endif %}
+
+<VirtualHost *:{{ nagios_vhost_port }}>
+
+<Directory "/usr/lib64/nagios/cgi-bin/">
+#  SSLRequireSSL
+   Options ExecCGI
+   AllowOverride None
+   <IfVersion >= 2.3>
+      <RequireAll>
+         Require all granted
+#        Require host 127.0.0.1
+
+         AuthName "Nagios Access"
+         AuthType Basic
+         AuthUserFile /etc/nagios/passwd
+         Require valid-user
+      </RequireAll>
+   </IfVersion>
+   <IfVersion < 2.3>
+      Order allow,deny
+      Allow from all
+#     Order deny,allow
+#     Deny from all
+#     Allow from 127.0.0.1
+
+      AuthName "Nagios Access"
+      AuthType Basic
+      AuthUserFile /etc/nagios/passwd
+      Require valid-user
+   </IfVersion>
+</Directory>
+
+Alias /nagios "/usr/share/nagios/html"
+
+<Directory "/usr/share/nagios/html">
+#  SSLRequireSSL
+   Options None
+   AllowOverride None
+   <IfVersion >= 2.3>
+      <RequireAll>
+         Require all granted
+#        Require host 127.0.0.1
+
+         AuthName "Nagios Access"
+         AuthType Basic
+         AuthUserFile /etc/nagios/passwd
+         Require valid-user
+      </RequireAll>
+   </IfVersion>
+   <IfVersion < 2.3>
+      Order allow,deny
+      Allow from all
+#     Order deny,allow
+#     Deny from all
+#     Allow from 127.0.0.1
+
+      AuthName "Nagios Access"
+      AuthType Basic
+      AuthUserFile /etc/nagios/passwd
+      Require valid-user
+   </IfVersion>
+</Directory>
+
+</VirtualHost>
