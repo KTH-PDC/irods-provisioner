@@ -63,6 +63,9 @@
     - name: irods resource state change interface script
       copy: src=irods-update_irods_resc_state.sh dest={{ irods_home }}/iRODS/scripts/update_irods_resc_state.sh owner={{ irods_service_account }} group={{ irods_service_group }} mode=0755
 
+    - name: nagios httpd virtual host config
+      template: src=../templates/httpd-nagios.conf.j2 dest=/etc/httpd/conf.d/nagios.conf owner=root group=root mode=0644
+
     - name: nagios service enabled and (re)started
       service: name=nagios enabled=yes state=restarted
 
