@@ -12,7 +12,7 @@
     "default_file_mode": "0600", 
     "default_hash_scheme": "SHA256", 
     "default_resource_directory": "{{ irods_temp_vault_dir }}", 
-    "default_resource_name": "demoResc", 
+    "default_resource_name": "{{ irods_default_resc }}", 
     "environment_variables": {
 {% if irods_kerberos_keytab is defined %}
         "KRB5_KTNAME": "{{ irods_kerberos_keytab }}"
