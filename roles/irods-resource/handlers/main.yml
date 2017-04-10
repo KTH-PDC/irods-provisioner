@@ -9,4 +9,4 @@
 ---
 
   - name: restart irods
-    service: name=irods state=restarted
+    shell: service irods restart
