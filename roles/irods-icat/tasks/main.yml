@@ -71,6 +71,7 @@
         - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
         - { srcfile: "../templates/irods-database_config.json.j2", destfile: "/etc/irods/database_config.json" }
         - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
+      notify: restart irods
 
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-icat provisioned successfully at {{ ansible_date_time.iso8601_micro }}, ha_state={{ ha_state }}" >> /etc/irods-provisioner.manifest
