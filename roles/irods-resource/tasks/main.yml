@@ -41,5 +41,11 @@
       args:
         creates: "{{ irods_home }}/.irods/irods_environment.json"
 
+    - name: configure iRODS resource server
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
+      with_items:
+        - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
+        - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
+
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-resource provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
