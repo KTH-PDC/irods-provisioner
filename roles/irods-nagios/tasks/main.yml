@@ -53,7 +53,7 @@
       when: ansible_selinux['status'] != 'disabled'
 
     - name: nagios admin password
-      htpasswd: path=/etc/nagios/passwd name=nagiosadmin password={{ nagios_admin_password }}
+      htpasswd: path=/etc/nagios/passwd name=nagiosadmin password={{ nagios_admin_passwd }}
 
     - name: nagios irods configuration
       template: src=../templates/nagios-irods.cfg.j2 dest=/etc/nagios/conf.d/irods.cfg owner=nagios group=nagios mode=0644
