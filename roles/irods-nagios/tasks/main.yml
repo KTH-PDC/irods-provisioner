@@ -8,10 +8,11 @@
 
 ---
 
-    - name: required package repositories
+    - name: required package repositories and packages
       yum: name={{ item }} state=installed
       with_items:
         - epel-release
+        - python-passlib
 
     - name: nagios packages
       yum: name={{ item }} state=latest
@@ -50,6 +51,9 @@
     - name: SELinux for nagios - permissive mode required!
       selinux: policy=targeted state=permissive
       when: ansible_selinux['status'] != 'disabled'
+
+    - name: nagios admin password
+      htpasswd: path=/etc/nagios/passwd name=nagiosadmin password={{ nagios_admin_password }}
 
     - name: nagios irods configuration
       template: src=../templates/nagios-irods.cfg.j2 dest=/etc/nagios/conf.d/irods.cfg owner=nagios group=nagios mode=0644
