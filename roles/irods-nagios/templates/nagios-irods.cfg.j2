@@ -12,7 +12,7 @@ define host {
     alias	     {{ ansible_nodename }}
     address	     {{ ansible_nodename }}
 }
-
+{% if groups['irods-resource'] is defined %}
 {% for host in groups['irods-resource'] %}
 
 define host {
@@ -23,11 +23,17 @@ define host {
 }
 
 {% endfor %}
+{% endif %}
+
 
 define hostgroup {
     hostgroup_name   irods-resource
     alias            iRODS Resource Servers
+{% if groups['irods-resource'] is defined %}
     members          {{ groups['irods-resource'] | join(',') }}
+{% else %}
+    members          {{ ansible_nodename }}
+{% endif %}
 }
 
 define hostgroup {
