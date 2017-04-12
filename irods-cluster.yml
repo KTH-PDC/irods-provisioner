@@ -29,6 +29,8 @@
       yum: name={{ item }} state=latest
       with_items:
         - epel-release
+      retries: 10
+      delay: 1
 
     - name: necessary management packages
       yum: name={{ item }} state=latest
@@ -42,6 +44,8 @@
         - httpd
         - php
         - git
+      retries: 10
+      delay: 1
 
 - hosts: irods
   become_user: root
@@ -86,7 +90,8 @@
 
     - role: emc-metalnx-web
 
-    - role: b2stage-gridftp
+# disabled due to broken build from master branch
+#    - role: b2stage-gridftp
 
 - hosts: irods-idm
   become_user: root
