@@ -1,0 +1,18 @@
+# irods-icat-provisioner
+#
+# host_vars/rodsidm2 - host configuration file for host rodsidm2
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+# host management setup
+ansible_connection: ssh
+ansible_host: 192.168.56.27
+ansible_user: vagrant
+ansible_ssh_private_key_file: .vagrant/machines/rodsidm2/virtualbox/private_key
+
+# private network setup
+ha_netif: eth2
+ha_ipaddr: 10.13.37.27
+ha_netmask: 255.255.255.0
