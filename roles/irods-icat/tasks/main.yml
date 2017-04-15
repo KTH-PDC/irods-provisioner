@@ -71,6 +71,7 @@
         - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
         - { srcfile: "../templates/irods-database_config.json.j2", destfile: "/etc/irods/database_config.json" }
         - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
+        - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
       notify: restart irods
 
     - name: add role execution info to irods-provisioner manifest file
