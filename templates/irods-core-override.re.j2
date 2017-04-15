@@ -6,4 +6,17 @@
 # Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
+acPreConnect(*OUT)
+{
+	*OUT = "{{ irods_client_server_policy }}";
+}
 
+acSetRescSchemeForCreate
+{
+	msiSetDefaultResc("{{ irods_default_resc }}","null");
+}
+
+acSetRescSchemeForRepl
+{
+	msiSetDefaultResc("{{ irods_default_resc }}","null");
+}

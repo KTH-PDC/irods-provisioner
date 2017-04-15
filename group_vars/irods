@@ -27,8 +27,10 @@ irods_validation_url: https://schemas.irods.org/configuration
 irods_admin_user: rods
 irods_admin_passwd: rods
 irods_default_resc: demoResc
+irods_client_server_policy: CS_NEG_REFUSE
 
 # iRODS rule engine configuration
 irods_rulebase_set:
-  - { "filename": "core" }
+- { "filename": "core-override" }
+- { "filename": "core" }
   
