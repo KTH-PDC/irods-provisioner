@@ -11,8 +11,8 @@
   - name: Apache Tomcat
     yum: name=tomcat state=latest
 
-  - name: EMC MetaLnx web application package (version 1.1.0)
-    yum: name=https://bintray.com/metalnx/rpm/download_file?file_path=emc-metalnx-webapp-1.1.0-272.noarch.rpm state=installed
+  - name: EMC MetaLnx web application package (version 1.0.2)
+    yum: name=https://bintray.com/metalnx/rpm/download_file?file_path=emc-metalnx-webapp-1.0-257.noarch.rpm state=installed
 
   - name: configure postgres role for metalnx-web
     become: yes
