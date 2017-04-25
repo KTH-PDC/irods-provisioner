@@ -11,7 +11,11 @@
       "maximum_number_of_concurrent_rule_engine_server_processes" : 4,
       "default_temporary_password_lifetime_in_seconds" : 120
    },
-   "federation" : [],
+{% if irods_zone_federation is defined %}
+   "federation": {{ irods_zone_federation | to_json }},
+{% else %}
+   "federation": [],
+{% endif %}
    "schema_validation_base_uri" : "{{ irods_validation_url }}",
    "zone_name" : "{{ irods_zone_name }}",
    "negotiation_key" : "{{ irods_negotiation_key }}",

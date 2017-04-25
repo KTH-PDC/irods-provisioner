@@ -18,7 +18,11 @@
         "KRB5_KTNAME": "{{ irods_kerberos_keytab }}"
 {% endif %}
     }, 
-    "federation": [], 
+{% if irods_zone_federation is defined %}
+    "federation": {{ irods_zone_federation | to_json }},
+{% else %}
+    "federation": [],
+{% endif %}
     "icat_host": "localhost", 
     "match_hash_policy": "compatible", 
     "negotiation_key": "{{ irods_negotiation_key }}", 

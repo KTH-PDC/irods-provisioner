@@ -33,4 +33,7 @@ irods_client_server_policy: CS_NEG_REFUSE
 irods_rulebase_set:
 - { "filename": "core-override" }
 - { "filename": "core" }
-  
+
+# iRODS zone federation configuration
+irods_zone_federation:
+- { "icat_host": "hostname", "irods_port": 1247, "zone_name": "zonename", "zone_key": "TEMPORARY_zone_key", "negotiation_key": "TEMPORARY_32byte_negotiation_key" }
