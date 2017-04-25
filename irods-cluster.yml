@@ -29,8 +29,6 @@
       yum: name={{ item }} state=latest
       with_items:
         - epel-release
-      retries: 10
-      delay: 1
 
     - name: necessary management packages
       yum: name={{ item }} state=latest
@@ -44,8 +42,6 @@
         - httpd
         - php
         - git
-      retries: 10
-      delay: 1
 
 - hosts: irods
   become_user: root
