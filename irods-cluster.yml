@@ -58,8 +58,6 @@
 
     - role: irods-icat
 
-    - role: pgadmin
-
     - role: emc-metalnx-rmd
 
     - role: irods-nagios
