@@ -48,6 +48,11 @@
         - { srcfile: "../templates/irods-icat-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-answerfile.txt" }
         - { srcfile: "../../../templates/irods-permissions-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-permissions-answerfile.txt" }
 
+    - name: write ODBC discovery script (to pin against postgres-9.x  ODBC)
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0755
+      with_items:
+        - { srcfile: "../templates/irods-find_odbc_postgres.sh.j2", destfile: "{{ irods_home }}/packaging/find_odbc_postgres.sh" } 
+
     - name: execute iRODS iCAT initial permissions setup if necessary
       shell: "{{ irods_home }}/packaging/setup_irods_service_account.sh < {{ irods_home }}/setup-permissions-answerfile.txt"
       args:
