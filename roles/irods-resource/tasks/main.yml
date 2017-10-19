@@ -13,11 +13,11 @@
       with_items:
         - epel-release
 
-    - name: iRODS packages (version 4.1.10)
+    - name: iRODS packages (version 4.1.11)
       yum: name={{ item }} state=installed
       with_items:
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-resource-4.1.10-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
+        - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-resource-4.1.11-centos7-x86_64.rpm
 
     - name: iRODS service group
       group: name={{ irods_service_group }} state=present
