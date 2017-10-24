@@ -47,19 +47,22 @@
     expect:
       command: python /opt/emc/setup_metalnx.py
       responses:
-        "Do you want to use Tomcat located at": "yes"
-        "Enter the Metalnx Database type": "postgresql"
-        "Enter Metalnx Database Host": "localhost"
-        "Enter Metalnx Database Port": "5432"
-        "Enter Metalnx Database Name": "{{ metalnx_db }}"
-        "Enter Metalnx Database User": "{{ metalnx_db_user }}"
-        "Enter Metalnx Database Password": "{{ metalnx_db_passwd }}"
-        "Enter iRODS Host": "{{ metalnx_irods_host }}"
-        "Enter iRODS Port": "{{ irods_zone_port }}"
-        "Enter iRODS Zone": "{{ irods_zone_name }}"
-        "Enter Authentication Schema": "STANDARD"
-        "Enter iRODS Admin User": "{{ irods_admin_user }}"
-        "Enter iRODS Admin Password": "{{ irods_admin_passwd }}"
-
+        Do you want to use Tomcat located at*: "yes"
+        Do you wish to use the current setup instead of creating a new one*: "yes"
+        Set HTTPS on your Tomcat server*: "yes"
+        Enter the Metalnx Database type*: "postgresql"
+        Enter Metalnx Database Host*: "localhost"
+        Enter Metalnx Database Port*: "5432"
+        Enter Metalnx Database Name*: "{{ metalnx_db }}"
+        Enter Metalnx Database User*: "{{ metalnx_db_user }}"
+        Enter Metalnx Database Password*: "{{ metalnx_db_passwd }}"
+        Enter iRODS Host*: "{{ metalnx_irods_host }}"
+        Enter iRODS Port*: "{{ irods_zone_port }}"
+        Enter iRODS Zone*: "{{ irods_zone_name }}"
+        Enter Authentication Schema*: "STANDARD"
+        Enter iRODS Admin User*: "{{ irods_admin_user }}"
+        Enter iRODS Admin Password*: "{{ irods_admin_passwd }}"
+        Enter the path for the keystore*: "/var/lib/tomcat/webapps/metalnx.keystore"
+        Enter the password for the keystore*: "change_it_on_real_install"
   - name: add role execution info to irods-provisioner manifest file
     shell: echo "# role emc-metalnx-web provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
