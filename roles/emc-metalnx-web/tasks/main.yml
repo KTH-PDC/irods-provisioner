@@ -49,7 +49,7 @@
       responses:
         Do you want to use Tomcat located at*: "yes"
         Do you wish to use the current setup instead of creating a new one*: "yes"
-        Set HTTPS on your Tomcat server*: "yes"
+        Set HTTPS on your Tomcat server*: "no"
         Enter the Metalnx Database type*: "postgresql"
         Enter Metalnx Database Host*: "localhost"
         Enter Metalnx Database Port*: "5432"
@@ -62,7 +62,5 @@
         Enter Authentication Schema*: "STANDARD"
         Enter iRODS Admin User*: "{{ irods_admin_user }}"
         Enter iRODS Admin Password*: "{{ irods_admin_passwd }}"
-        Enter the path for the keystore*: "/var/lib/tomcat/webapps/metalnx.keystore"
-        Enter the password for the keystore*: "change_it_on_real_install"
   - name: add role execution info to irods-provisioner manifest file
     shell: echo "# role emc-metalnx-web provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
