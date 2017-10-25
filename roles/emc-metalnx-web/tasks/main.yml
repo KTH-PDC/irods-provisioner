@@ -11,8 +11,18 @@
   - name: Apache Tomcat
     yum: name=tomcat state=latest
 
+  - name: Python pexpect remove stock package
+    yum: name=pexpect state=absent
+
+  - name: Python pip install 
+    yum: name=python-pip state=latest
+
+  - name: Python pexpect install from pip
+    pip:
+      name: pexpect
+    
   - name: EMC MetaLnx web application package (version 1.0.2)
-    yum: name=https://bintray.com/metalnx/rpm/download_file?file_path=emc-metalnx-webapp-1.0-257.noarch.rpm state=installed
+    yum: name=http://bintray.com/metalnx/rpm/download_file?file_path=emc-metalnx-webapp-1.0-257.noarch.rpm state=installed
 
   - name: configure postgres role for metalnx-web
     become: yes
@@ -33,5 +43,24 @@
     command: "setsebool -P httpd_can_network_connect true"
     when: ansible_selinux['status'] != 'disabled'
 
+  - name: setup metalnx
+    expect:
+      command: python /opt/emc/setup_metalnx.py
+      responses:
+        Do you want to use Tomcat located at*: "yes"
+        Do you wish to use the current setup instead of creating a new one*: "yes"
+        Set HTTPS on your Tomcat server*: "no"
+        Enter the Metalnx Database type*: "postgresql"
+        Enter Metalnx Database Host*: "localhost"
+        Enter Metalnx Database Port*: "5432"
+        Enter Metalnx Database Name*: "{{ metalnx_db }}"
+        Enter Metalnx Database User*: "{{ metalnx_db_user }}"
+        Enter Metalnx Database Password*: "{{ metalnx_db_passwd }}"
+        Enter iRODS Host*: "{{ metalnx_irods_host }}"
+        Enter iRODS Port*: "{{ irods_zone_port }}"
+        Enter iRODS Zone*: "{{ irods_zone_name }}"
+        Enter Authentication Schema*: "STANDARD"
+        Enter iRODS Admin User*: "{{ irods_admin_user }}"
+        Enter iRODS Admin Password*: "{{ irods_admin_passwd }}"
   - name: add role execution info to irods-provisioner manifest file
     shell: echo "# role emc-metalnx-web provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
