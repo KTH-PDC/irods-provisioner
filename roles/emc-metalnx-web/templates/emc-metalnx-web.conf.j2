@@ -6,6 +6,8 @@
 # Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
+Listen {{ metalnx_vhost_port }}
+
 <VirtualHost *:{{ metalnx_vhost_port }}>
 {% if metalnx_vhost_ssl_enable == true %}
    SSLEngine on
