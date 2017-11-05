@@ -11,6 +11,13 @@
   - name: Apache Tomcat
     yum: name=tomcat state=latest
 
+  - name: Apache httpd
+    yum: name={{ item }} state=installed
+    with_items:
+      - httpd
+      - httpd-tools
+      - mod_ssl
+
   - name: Python pexpect remove stock package
     yum: name=pexpect state=absent
 
@@ -20,7 +27,10 @@
   - name: Python pexpect install from pip
     pip:
       name: pexpect
-    
+
+  - selinux: policy=targeted state=permissive
+    when: ansible_selinux['status'] != 'disabled'
+
   - name: EMC MetaLnx web application package (version 1.4.0)
     yum: name=https://bintray.com/metalnx/rpm/download_file?file_path=emc-metalnx-webapp-1.4.0-9.noarch.rpm state=installed
 
@@ -38,6 +48,7 @@
 
   - name: configure apache virtual host for reverse proxy
     template: src=../templates/emc-metalnx-web.conf.j2 dest=/etc/httpd/conf.d/emc-metalnx-web.conf owner=root group=root mode=0644
+    notify: restart httpd
 
   - name: SELinux for emc-metalnx-web - allow httpd to connect to tomcat port 8080
     command: "setsebool -P httpd_can_network_connect true"
@@ -63,6 +74,12 @@
         Enter iRODS Admin User*: "{{ irods_admin_user }}"
         Enter iRODS Admin Password*: "{{ irods_admin_passwd }}"
         Do you accept these configuration paramaters*: "yes"
+
+  - name: httpd enabled and started
+    systemd: name=httpd enabled=yes state=started
+
+  - name: tomcat enabled and started
+    systemd: name=tomcat enabled=yes state=started
 
   - name: add role execution info to irods-provisioner manifest file
     shell: echo "# role emc-metalnx-web provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
