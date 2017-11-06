@@ -6,7 +6,9 @@
 # Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
+{% if metalnx_vhost_port not in (80,443) %}
 Listen {{ metalnx_vhost_port }}
+{% endif %}
 
 <VirtualHost *:{{ metalnx_vhost_port }}>
 {% if metalnx_vhost_ssl_enable == true %}
