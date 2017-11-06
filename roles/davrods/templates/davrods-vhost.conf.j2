@@ -13,7 +13,7 @@
 # Below we provide an example vhost configuration that enables davrods using
 # its default options.
 
-{% if davrods_vhost_port != 80 %}
+{% if davrods_vhost_port not in (80,443) %}
 Listen {{ davrods_vhost_port }}
 {% endif %}
 
