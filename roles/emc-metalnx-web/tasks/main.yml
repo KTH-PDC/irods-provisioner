@@ -54,7 +54,11 @@
     command: "setsebool -P httpd_can_network_connect true"
     when: ansible_selinux['status'] != 'disabled'
 
-  - name: setup metalnx
+  - name: check for a successful metalnx install
+    stat: path=/var/lib/tomcat/webapps/emc-metalnx-web/WEB-INF/classes/irods.environment.properties
+    register: metalnx_install
+
+  - name: setup metalnx if not setup already
     expect:
       command: python /opt/emc/setup_metalnx.py
       responses:
@@ -74,6 +78,7 @@
         Enter iRODS Admin User*: "{{ irods_admin_user }}"
         Enter iRODS Admin Password*: "{{ irods_admin_passwd }}"
         Do you accept these configuration paramaters*: "yes"
+    when: metalnx_install.stat.exists == false
 
   - name: httpd enabled and started
     systemd: name=httpd enabled=yes state=started
