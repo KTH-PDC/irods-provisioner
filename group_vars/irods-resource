@@ -8,6 +8,7 @@
 
 # Davrods configuration
 davrods_vhost_port: 80
+davrods_vhost_name: "{{ ansible_nodename }}"
 davrods_vhost_ssl_enable: false
 davrods_irods_host: localhost
 davrods_auth_scheme: Native

@@ -36,7 +36,7 @@ Listen {{ davrods_vhost_port }}
 {% endif %}
 
     # Enter your server name here.
-    ServerName {{ ansible_nodename }}
+    ServerName {{ davrods_vhost_name }}
 
     # NB: Some webdav clients expect the server to implement webdav at the root
     # location (they execute an OPTIONS request to verify existence of webdav
