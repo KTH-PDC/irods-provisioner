@@ -25,6 +25,9 @@
     - name: iRODS service account
       user: name={{ irods_service_account }} group={{ irods_service_group }} comment="iRODS Administrator" home={{ irods_home }}
 
+    - name: check and fix permissions
+      file: path={{ irods_home }}/iRODS/server/log state=directory owner={{ irods_service_account }} group={{ irods_service_group }} mode=0700
+
     - name: write iRODS resource setup answerfile(s)
       template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
       with_items:
