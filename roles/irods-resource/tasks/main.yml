@@ -48,6 +48,7 @@
       template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
       with_items:
         - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
+        - { srcfile: "../templates/irods-hosts_config.json.j2", destfile: "/etc/irods/hosts_config.json" }
         - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
         - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
       notify: restart irods
