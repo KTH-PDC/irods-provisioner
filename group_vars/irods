@@ -11,6 +11,7 @@ irods_icat_master: rodsmaster1
 irods_icat_slave: rodsmaster2
 
 # iRODS base configuration
+irods_icat_host: "{{ irods_icat_master }}"
 irods_home: /var/lib/irods
 irods_service_account: irods
 irods_service_group: irods
