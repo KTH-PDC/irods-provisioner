@@ -1,0 +1,15 @@
+# irods-provisioner
+#
+# roles/irods-logforw/tasks/main.yml - Ansible playbook for configuring iRODS syslog forwarding
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2018 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+---
+
+    - name: add role execution info to irods-provisioner manifest file
+      shell: echo "# role irods-client provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
+
+    - name: iRODS logforwarder (irods-logforw) package (version 1.0.0)
+      yum: name=https://github.com/KTH-PDC/irods-logforw/releases/download/1.0.0/logforw-1.0.0-1.x86_64.rpm state=present
