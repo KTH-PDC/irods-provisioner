@@ -62,6 +62,8 @@
 
     - role: irods-nagios
 
+    - role: irods-logforw
+
 - hosts: irods-resource
   become_user: root
 
@@ -71,6 +73,8 @@
     - role: davrods
 
     - role: emc-metalnx-rmd
+
+    - role: irods-logforw
 
 - hosts: irods-frontend
   become_user: root
