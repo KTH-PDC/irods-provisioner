@@ -38,6 +38,10 @@
         - { srcfile: "../templates/davrods-irods_environment.json.j2", destfile: "/etc/httpd/irods/irods_environment.json" }
       notify: restart httpd
 
+    - name: Davrods anonymous access virtual host
+      template: src="../templates/davrods-anonymous-vhost.conf.j2" dest="/etc/httpd/conf.d/davrods-anonymous-vhost.conf"
+      when: davrods_anon_vhost_enable == true
+
     - name: httpd enabled and started
       systemd: name=httpd enabled=yes state=started
 
