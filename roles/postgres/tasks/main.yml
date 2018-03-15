@@ -26,7 +26,7 @@
         - python-psycopg2
 
     - name: initialize postgres database on initial master node
-      command: "{{ postgres_prefix }}/bin/postgresql95-setup initdb"
+      shell: "PGSETUP_INITDB_OPTIONS='-E UTF-8' {{ postgres_prefix }}/bin/postgresql95-setup initdb"
       args:
         creates: "{{ postgres_datadir }}/postgresql.conf"
       when: ha_state == "master"
@@ -43,19 +43,22 @@
         - { srcfile: "../templates/postgres-pg_hba.conf.j2", destfile: "{{ postgres_datadir }}//pg_hba.conf" }
         - { srcfile: "../templates/postgres-postgresql.conf.j2", destfile: "{{ postgres_datadir }}/postgresql.conf" }
       notify: restart postgres
-      
+
     - name: postgres service started on postgres master
       service: name=postgresql-9.5 state=started
       when: ha_state == "master"
 
-    - name: configure postgres roles (superuser, replication)
+    - name: configure postgres superuser role
       become: yes
       become_user: postgres
-      postgresql_user: name={{ item.role }} password={{ item.password }} role_attr_flags="LOGIN,REPLICATION" encrypted=yes
-      with_items:
-        - { role: "postgres", password: "{{ postgres_passwd }}" }
-        - { role: "{{ replication_user }}", password: "{{ replication_passwd }}" }
+      postgresql_user: name="postgres" password={{ postgres_passwd }} encrypted=yes
       when: ha_state == "master"
+
+    - name: configure postgres replication role
+      become: yes
+      become_user: postgres
+      postgresql_user: name="{{ replication_user }}" password="{{ replication_passwd }}" role_attr_flags="LOGIN,REPLICATION" encrypted=yes
+      when: ha_state == "master" and replication_user is defined
 
     - name: configure pgpool-II extensions for template1 on postgres master
       become: yes
