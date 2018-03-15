@@ -1,0 +1,16 @@
+# irods-provisioner
+#
+# roles/irods-logforw/templates/sysconfig-logforw.j2 - template for configuring logforw for iRODS
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2018 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+# set delay for polling log files
+DELAY={{ logforw_delay }}
+
+# set pattern for log file paths
+PATTERN="{{ logforw_pattern }}"
+
+# set the path for scanning
+PATH="{{ logforw_path }}"

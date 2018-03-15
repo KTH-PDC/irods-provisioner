@@ -1,0 +1,10 @@
+# irods-provisioner
+#
+# roles/irods-logforw/templates/rsyslog-logforw.conf.j2 - template for configuring rsyslog for iRODS logforw
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2018 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+:msg, contains, "logforw:" -/var/log/irods/rodsLog
+&~

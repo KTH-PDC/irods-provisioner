@@ -38,3 +38,7 @@ irods_rulebase_set:
 # iRODS zone federation configuration
 irods_zone_federation:
 - { "icat_host": "hostname", "irods_port": 1247, "zone_name": "zonename", "zone_key": "TEMPORARY_zone_key", "negotiation_key": "TEMPORARY_32byte_negotiation_key" }
+
+logforw_delay: 10
+logforw_pattern: /var/lib/irods/iRODS/server/log/rodsLog.*
+logforw_path: /var/lib/irods/iRODS/server/log

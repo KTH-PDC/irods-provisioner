@@ -1,0 +1,17 @@
+# irods-provisioner
+#
+# roles/irods-logforw/tasks/main.yml - Ansible playbook for configuring iRODS syslog forwarding
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2018 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+/var/log/irods/rodsLog
+{
+   missingok
+   weekly
+   rotate 4
+   postrotate
+	/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+   endscript
+}

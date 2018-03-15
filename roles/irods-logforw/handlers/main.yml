@@ -1,0 +1,15 @@
+# irods-provisioner
+#
+# roles/irods-logforw/handlers/main.yml - define event handers for irods-logforw role
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2018 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+---
+
+  - name: restart rsyslog
+    systemd: name=rsyslog state=restarted
+
+  - name: restart logforw
+    systemd: name=logforw state=restarted

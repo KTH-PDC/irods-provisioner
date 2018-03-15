@@ -14,5 +14,18 @@
     - name: iRODS logforwarder (irods-logforw) package (version 1.0.1)
       yum: name=https://github.com/KTH-PDC/irods-logforw/releases/download/1.0.1/logforw-1.0.1-1.x86_64.rpm state=present
 
-    - name: logforw service enabled and started
-      systemd: name=logforw enabled=yes state=started
+    - name: logforw configuration
+      template: src=../templates/sysconfig-logforw.j2 dest=/etc/sysconfig/logforw owner=root group=root mode=0644
+
+    - name: rsyslog configuration
+      template: src=../templates/rsyslog-logforw.conf.j2 dest=/etc/rsyslog.d/logforw.conf owner=root group=root mode=0644
+      notify: restart rsyslog
+
+    - name: logrotate configuration
+      template: src=../templates/logrotate-irods.j2 dest=/etc/logrotate.d/irods owner=root group=root mode=0644
+
+    - name: directory for irods syslog
+      file: path=/var/log/irods state=directory owner=root group=root mode=0700
+
+    - name: logforw service enabled and (re)started
+      systemd: name=logforw enabled=yes state=restarted
