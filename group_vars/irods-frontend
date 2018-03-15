@@ -45,7 +45,7 @@ davrods_vhost_port: 8443
 davrods_vhost_name: "{{ ansible_nodename }}"
 davrods_vhost_ssl_enable: false
 davrods_anon_vhost_enable: true
-davrods_anon_vhost_port: 8888
+davrods_anon_vhost_port: 9000
 davrods_anon_vhost_name: "{{ ansible_nodename }}"
 davrods_anon_vhost_ssl_enable: false
 davrods_irods_host: "{{ irods_icat_master }}"
