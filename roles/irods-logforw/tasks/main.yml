@@ -18,7 +18,7 @@
       template: src=../templates/sysconfig-logforw.j2 dest=/etc/sysconfig/logforw owner=root group=root mode=0644
 
     - name: rsyslog configuration
-      template: src=../templates/rsyslog-logforw.conf.j2 dest=/etc/rsyslog.d/logforw.conf owner=root group=root mode=0644
+      template: src=../templates/rsyslog-logforw-irods.conf.j2 dest=/etc/rsyslog.d/logforw-irods.conf owner=root group=root mode=0644
       notify: restart rsyslog
 
     - name: logrotate configuration
