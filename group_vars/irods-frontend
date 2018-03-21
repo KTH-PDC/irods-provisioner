@@ -1,6 +1,6 @@
 # irods-provisioner
 #
-# group_vars/irods-frontend - group variables for the iRODS resource hosts
+# group_vars/irods-frontend - group variables for the iRODS frontend hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
 #
 # Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
@@ -13,15 +13,14 @@ postgres_homedir: /var/lib/pgsql
 postgres_rootdir: /var/lib/pgsql/9.5
 postgres_datadir: /var/lib/pgsql/9.5/data
 postgres_passwd: r00hr00h
+postgres_listen: localhost
+postgres_maxconn: 100
+postgres_buf_shared: 128MB
 
 # postgres healthcheck role/database configuration
 healthcheck_user: healthcheck
 healthcheck_passwd: 0nksp0ssuja
 healthcheck_db: healthcheck
-
-# postgres replication role configuration
-replication_user: replication
-replication_passwd: kl00nip0ssu
 
 # metalnx-web configuration
 metalnx_db_user: metalnx

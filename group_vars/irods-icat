@@ -13,6 +13,9 @@ postgres_homedir: /var/lib/pgsql
 postgres_rootdir: /var/lib/pgsql/9.5
 postgres_datadir: /var/lib/pgsql/9.5/data
 postgres_passwd: r00hr00h
+postgres_listen: '*'
+postgres_maxconn: 100
+postgres_buf_shared: 128MB
 
 # postgres healthcheck role/database configuration
 healthcheck_user: healthcheck

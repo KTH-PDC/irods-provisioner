@@ -19,9 +19,9 @@ host    all             all             ::1/128                 md5
 #local   replication     postgres                                peer
 #host    replication     postgres        127.0.0.1/32            ident
 #host    replication     postgres        ::1/128                 ident
-{% if irods_icat_master is defined %}
+{% if irods_icat_master is defined and replication_user is defined %}
 host	 replication	 {{ replication_user }}	{{ hostvars[irods_icat_master]['ha_ipaddr'] }}/32	md5
 {% endif %}
-{% if irods_icat_slave is defined %}
+{% if irods_icat_slave is defined and replication_user is defined %}
 host	 replication	 {{ replication_user }} {{ hostvars[irods_icat_slave]['ha_ipaddr'] }}/32	md5
 {% endif %}

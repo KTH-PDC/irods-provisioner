@@ -72,6 +72,7 @@
       become: yes
       become_user: postgres
       template: src="../templates/postgres-pgpass.j2" dest="{{ postgres_homedir }}/.pgpass" owner=postgres group=postgres mode=0600
+      when: replication_user is defined
 
     - name: basebackup on postgres slave
       become: yes

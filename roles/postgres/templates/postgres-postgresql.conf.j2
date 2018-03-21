@@ -6,10 +6,10 @@
 # Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
-listen_addresses = '*'
-max_connections = 100
+listen_addresses = '{{ postgres_listen }}'
+max_connections = {{ postgres_maxconn }}
 
-shared_buffers = 128MB
+shared_buffers = {{ postgres_buf_shared }}
 dynamic_shared_memory_type = posix
 
 hot_standby = on
