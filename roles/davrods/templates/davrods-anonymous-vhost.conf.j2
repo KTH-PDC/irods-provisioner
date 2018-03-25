@@ -33,7 +33,7 @@ Listen {{ davrods_anon_vhost_port }}
        DavRodsEnvFile  /etc/httpd/irods/irods_environment.json
        DavRodsServer {{ davrods_irods_host }} {{ irods_zone_port }}
        DavRodsZone {{ irods_zone_name }}
-       DavRodsAuthScheme {{ davrods_auth_scheme }}
+       DavRodsAuthScheme {{ davrods_anon_login_auth_scheme }}
 
        DavRodsAnonymousMode On
        DavRodsAnonymousLogin "{{ davrods_anon_login_user }}" "{{ davrods_anon_login_passwd }}"
