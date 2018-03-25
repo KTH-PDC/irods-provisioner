@@ -51,6 +51,7 @@
         - { srcfile: "../templates/irods-hosts_config.json.j2", destfile: "/etc/irods/hosts_config.json" }
         - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
         - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
+        - { srcfile: "../../../templates/irods-irods_environment.json.j2", destfile: "{{ irods_home }}/.irods/irods_environment.json" }
       notify: restart irods
 
     - name: add role execution info to irods-provisioner manifest file
