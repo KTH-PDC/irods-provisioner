@@ -11,8 +11,8 @@
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-client provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
 
-    - name: iRODS logforwarder (irods-logforw) package (version 1.0.1)
-      yum: name=https://github.com/KTH-PDC/irods-logforw/releases/download/1.0.1/logforw-1.0.1-1.x86_64.rpm state=present
+    - name: iRODS logforwarder (irods-logforw) package (version 1.0.2)
+      yum: name=https://github.com/KTH-PDC/irods-logforw/releases/download/1.0.2/logforw-1.0.2-1.x86_64.rpm state=present
 
     - name: logforw configuration
       template: src=../templates/sysconfig-logforw.j2 dest=/etc/sysconfig/logforw owner=root group=root mode=0644
@@ -25,7 +25,10 @@
       template: src=../templates/logrotate-irods.j2 dest=/etc/logrotate.d/irods owner=root group=root mode=0644
 
     - name: directory for irods syslog
-      file: path=/var/log/irods state=directory owner=root group=root mode=0700
+      file: path=/var/log/irods state=directory owner={{ irods_service_account }} group={{ irods_service_group }} mode=0700
+
+    - name: logforw directory permissions
+      file: path=/var/log/logforw state=directory owner={{ irods_service_account }} group={{ irods_service_group }} mode=0700
 
     - name: logforw service enabled and (re)started
       systemd: name=logforw enabled=yes state=restarted
