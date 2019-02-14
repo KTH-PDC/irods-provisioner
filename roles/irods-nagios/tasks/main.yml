@@ -9,34 +9,38 @@
 ---
 
     - name: required package repositories and packages
-      yum: name={{ item }} state=installed
-      with_items:
-        - epel-release
-        - python-passlib
+      yum:
+        name:
+          - epel-release
+          - python-passlib
+        state: installed
 
     - name: nagios packages
-      yum: name={{ item }} state=latest
-      with_items:
-        - nagios
-        - nagios-common
-        - nagios-plugins
+      yum:
+        name:
+          - nagios
+          - nagios-common
+          - nagios-plugins
+        state: latest
 
     - name: nagios plugins
-      yum: name={{ item }} state=latest
-      with_items:
-        - nagios-plugins-ping
-        - nagios-plugins-load
-        - nagios-plugins-users
-        - nagios-plugins-http
-        - nagios-plugins-disk
-        - nagios-plugins-ssh
-        - nagios-plugins-swap
-        - nagios-plugins-procs
+      yum:
+        name:
+          - nagios-plugins-ping
+          - nagios-plugins-load
+          - nagios-plugins-users
+          - nagios-plugins-http
+          - nagios-plugins-disk
+          - nagios-plugins-ssh
+          - nagios-plugins-swap
+          - nagios-plugins-procs
+        state: latest
 
     - name: iRODS packages (version 4.1.11)
-      yum: name={{ item }} state=installed
-      with_items:
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
+      yum:
+        name:
+          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
+        state: installed
 
     - name: iRODS iping for nagios
       yum: name=https://github.com/KTH-PDC/rit-irods-clients/releases/download/1.0.0/rit-irods-clients-1.0.0-1.x86_64.rpm state=installed
@@ -54,6 +58,9 @@
 
     - name: nagios admin password
       htpasswd: path=/etc/nagios/passwd name=nagiosadmin password={{ nagios_admin_passwd }}
+
+    - name: nagios configuration directory
+      file: name=/etc/nagios/conf.d state=directory owner=root group=root mode=0755
 
     - name: nagios irods configuration
       template: src=../templates/nagios-irods.cfg.j2 dest=/etc/nagios/conf.d/irods.cfg owner=nagios group=nagios mode=0644

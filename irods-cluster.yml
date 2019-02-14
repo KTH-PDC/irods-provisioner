@@ -26,22 +26,24 @@
       template: src="../templates/irods-provisioner.manifest.j2" dest="/etc/irods-provisioner.manifest" mode=0644 owner=root group=root
 
     - name: necessary package repositories
-      yum: name={{ item }} state=latest
-      with_items:
-        - epel-release
+      yum:
+        name:
+          - epel-release
+        state: latest
 
     - name: necessary management packages
-      yum: name={{ item }} state=latest
-      with_items:
-        - psmisc
-        - net-tools
-        - htop
-        - iotop
-        - iftop
-        - python-psycopg2
-        - httpd
-        - php
-        - git
+      yum:
+        name:
+          - psmisc
+          - net-tools
+          - htop
+          - iotop
+          - iftop
+          - python-psycopg2
+          - httpd
+          - php
+          - git
+        state: latest
 
 - hosts: irods
   become_user: root

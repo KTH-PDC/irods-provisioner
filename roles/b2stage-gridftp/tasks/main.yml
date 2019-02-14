@@ -9,27 +9,29 @@
 ---
 
     - name: iRODS packages (version 4.1.10)
-      yum: name={{ item }} state=installed
-      with_items:
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-icommands-4.1.10-centos7-x86_64.rpm
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-dev-4.1.10-centos7-x86_64.rpm
-
+      yum:
+        name:
+          - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-runtime-4.1.10-centos7-x86_64.rpm
+          - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-icommands-4.1.10-centos7-x86_64.rpm
+          - ftp://ftp.renci.org/pub/irods/releases/4.1.10/centos7/irods-dev-4.1.10-centos7-x86_64.rpm
+        state: installed
+ 
     - name: development tools
       yum: name="@Development tools" state=installed
 
     - name: required packages for building b2stage-gridftp
-      yum: name={{ item }} state=latest
-      with_items:
-        - cmake
-        - globus-gridftp-server-progs
-        - globus-simple-ca
-        - globus-gass-copy-progs
-        - globus-common-devel
-        - globus-gridftp-server-devel
-        - globus-gridmap-callout-error-devel
-        - libcurl-devel
-        - openssl-devel
+      yum:
+        name:
+          - cmake
+          - globus-gridftp-server-progs
+          - globus-simple-ca
+          - globus-gass-copy-progs
+          - globus-common-devel
+          - globus-gridftp-server-devel
+          - globus-gridmap-callout-error-devel
+          - libcurl-devel
+          - openssl-devel
+        state: latest
 
     - name: b2stage-gridftp build script
       template: src=../templates/build-b2stage-gridftp.sh.j2 dest=/tmp/build-b2stage-gridftp.sh owner=root group=root mode=0755

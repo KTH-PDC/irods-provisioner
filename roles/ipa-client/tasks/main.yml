@@ -9,7 +9,8 @@
 ---
 
     - name: IPA client packages
-      yum: name={{ item }} state=latest
-      with_items:
-        - ipa-client
-        - ipa-client-common
+      yum:
+        name:
+          - ipa-client
+          - ipa-client-common
+        state: latest

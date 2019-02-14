@@ -8,17 +8,19 @@
 
 ---
     - name: required package repositories
-      yum: name={{ item }} state=installed
-      with_items:
-        - epel-release
+      yum:
+        name:
+          - epel-release
+        state: installed
 
     - name: iRODS version 4.1.11
-      yum: name={{ item }} state=installed
-      with_items:
-        - unixODBC
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-icat-4.1.11-centos7-x86_64.rpm
-        - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-database-plugin-postgres-1.11-centos7-x86_64.rpm
+      yum:
+        name:
+          - unixODBC
+          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
+          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-icat-4.1.11-centos7-x86_64.rpm
+          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-database-plugin-postgres-1.11-centos7-x86_64.rpm
+        state: installed
 
     - name: configure database roles on postgres master
       become: yes

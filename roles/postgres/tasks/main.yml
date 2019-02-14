@@ -9,21 +9,23 @@
 ---
 
     - name: required package repositories
-      yum: name={{ item }} state=installed
-      with_items:
-        - epel-release
-        - http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-3.noarch.rpm
+      yum:
+        name:
+          - epel-release
+          - http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-3.noarch.rpm
+        state: installed
 
     - name: PostgreSQL 9.5 database server and python bindings
-      yum: name={{ item }} state=latest
-      with_items:
-        - postgresql95-debuginfo
-        - postgresql95-contrib
-        - postgresql95-libs
-        - postgresql95-odbc
-        - postgresql95-server
-        - pgpool-II-95-extensions
-        - python-psycopg2
+      yum:
+        name:
+          - postgresql95-debuginfo
+          - postgresql95-contrib
+          - postgresql95-libs
+          - postgresql95-odbc
+          - postgresql95-server
+          - pgpool-II-95-extensions
+          - python-psycopg2
+        state: latest
 
     - name: initialize postgres database on initial master node
       shell: "PGSETUP_INITDB_OPTIONS='-E UTF-8' {{ postgres_prefix }}/bin/postgresql95-setup initdb"

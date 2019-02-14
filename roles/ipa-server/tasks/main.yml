@@ -9,8 +9,8 @@
 ---
 
    - name: IPA server packages
-     yum: name={{ item }} state=latest
-     with_items:
-       - ipa-server
-       - ipa-server-dns
-       
+     yum:
+       name:
+         - ipa-server
+         - ipa-server-dns
+       state: latest
