@@ -90,9 +90,6 @@
 
     - role: emc-metalnx-web
 
-# disabled due to broken build from master branch
-#    - role: b2stage-gridftp
-
 - hosts: irods-idm
   become_user: root
 
