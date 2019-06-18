@@ -90,8 +90,8 @@
 
     - role: emc-metalnx-web
 
-- hosts: irods-idm
-  become_user: root
-
-  roles:
-    - role: ipa-server
+# - hosts: irods-idm
+#   become_user: root
+#
+#   roles:
+#     - role: ipa-server
