@@ -13,8 +13,6 @@ rodsresc1
 rodsresc2
 rodsresc3
 rodsfront1
-rodsidm1
-rodsidm2
 
 [irods-icat]
 rodsmaster1
@@ -27,7 +25,3 @@ rodsresc3
 
 [irods-frontend]
 rodsfront1
-
-[irods-idm]
-rodsidm1
-rodsidm2
