@@ -45,13 +45,6 @@
           - git
         state: latest
 
-- hosts: irods
-  become_user: root
-
-  roles:
-    - role: ipa-client
-
-
 - hosts: irods-icat
   become_user: root
   
