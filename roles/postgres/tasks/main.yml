@@ -79,7 +79,7 @@
     - name: basebackup on postgres slave
       become: yes
       become_user: postgres
-      command: "{{ postgres_prefix }}/bin/pg_basebackup -R -D {{ postgres_datadir }} -U {{ replication_user }} -X stream -h {{ hostvars[irods_icat_master]['ha_ipaddr'] }}"
+      command: "{{ postgres_prefix }}/bin/pg_basebackup -R -D {{ postgres_datadir }} -U {{ replication_user }} -X stream -h {{ hostvars[icat_master_host]['ha_ipaddr'] }}"
       args:
         creates: "{{ postgres_datadir }}/postgresql.conf"
       when: ha_state == "slave"

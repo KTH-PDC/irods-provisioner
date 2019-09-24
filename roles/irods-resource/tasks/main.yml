@@ -14,47 +14,65 @@
           - epel-release
         state: installed
 
-    - name: iRODS packages (version 4.1.11)
+
+    - name: iRODS RPM package repository signing key
+      shell: "rpm --import https://packages.irods.org/irods-signing-key.asc"
+
+    - name: iRODS RPM package repository
+      get_url:
+        url: https://packages.irods.org/renci-irods.yum.repo
+        dest: /etc/yum.repos.d/renci-irods.yum.repo
+
+    - name: iRODS version 4.2.x latest
       yum:
         name:
-          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
-          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-resource-4.1.11-centos7-x86_64.rpm
+          - unixODBC
+          - irods-runtime
+          - irods-server
+          - irods-database-plugin-postgres
         state: installed
 
+    # - name: iRODS packages (version 4.1.11)
+    #   yum:
+    #     name:
+    #       - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
+    #       - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-resource-4.1.11-centos7-x86_64.rpm
+    #     state: installed
+
     - name: iRODS service group
-      group: name={{ irods_service_group }} state=present
+      group: name={{ __irods_service_group }} state=present
 
     - name: iRODS service account
-      user: name={{ irods_service_account }} group={{ irods_service_group }} comment="iRODS Administrator" home={{ irods_home }}
+      user: name={{ __irods_service_account }} group={{ __irods_service_group }} comment="iRODS Administrator" home={{ __irods_home_dir }}
 
     - name: check and fix permissions
-      file: path={{ irods_home }}/iRODS/server/log state=directory owner={{ irods_service_account }} group={{ irods_service_group }} mode=0700
+      file: path={{ __irods_home_dir }}/log state=directory owner={{ __irods_service_account }} group={{ __irods_service_group }} mode=0700
 
-    - name: write iRODS resource setup answerfile(s)
-      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
-      with_items:
-        - { srcfile: "../templates/irods-resource-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-answerfile.txt" }
-        - { srcfile: "../../../templates/irods-permissions-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-permissions-answerfile.txt" }
+    # - name: write iRODS resource setup answerfile(s)
+    #   template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
+    #   with_items:
+    #     - { srcfile: "../templates/irods-resource-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-answerfile.txt" }
+    #     - { srcfile: "../../../templates/irods-permissions-setup-answerfile.j2", destfile: "{{ irods_home }}/setup-permissions-answerfile.txt" }
 
-    - name: execute iRODS initial permissions setup if necessary
-      shell: "{{ irods_home }}/packaging/setup_irods_service_account.sh < {{ irods_home }}/setup-permissions-answerfile.txt"
-      args:
-        creates: "/etc/irods/service_account.config"
+    # - name: execute iRODS initial permissions setup if necessary
+    #   shell: "{{ irods_home }}/packaging/setup_irods_service_account.sh < {{ irods_home }}/setup-permissions-answerfile.txt"
+    #   args:
+    #     creates: "/etc/irods/service_account.config"
 
-    - name: execute iRODS initial setup if necessary
-      shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
-      args:
-        creates: "{{ irods_home }}/.irods/irods_environment.json"
+    # - name: execute iRODS initial setup if necessary
+    #   shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
+    #   args:
+    #     creates: "{{ irods_home }}/.irods/irods_environment.json"
 
-    - name: configure iRODS resource server
-      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
-      with_items:
-        - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
-        - { srcfile: "../templates/irods-hosts_config.json.j2", destfile: "/etc/irods/hosts_config.json" }
-        - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
-        - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
-        - { srcfile: "../../../templates/irods-irods_environment.json.j2", destfile: "{{ irods_home }}/.irods/irods_environment.json" }
-      notify: restart irods
+    # - name: configure iRODS resource server
+    #   template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
+    #   with_items:
+    #     - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
+    #     - { srcfile: "../templates/irods-hosts_config.json.j2", destfile: "/etc/irods/hosts_config.json" }
+    #     - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
+    #     - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
+    #     - { srcfile: "../../../templates/irods-irods_environment.json.j2", destfile: "{{ irods_home }}/.irods/irods_environment.json" }
+    #   notify: restart irods
 
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-resource provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
