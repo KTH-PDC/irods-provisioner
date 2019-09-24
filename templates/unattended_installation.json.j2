@@ -1,0 +1,11 @@
+{
+    "admin_password": "{{ irods_admin_passwd }}",
+    "host_access_control_config": {{ irods_access_control_config | to_nice_json(indent=4) }},
+    "host_system_information": {
+	"service_account_user_name": "{{ irods_service_account }}",
+	"service_account_group_name": "{{ irods_service_group }}"
+    },
+    "hosts_config": {{ irods_hosts_config | to_nice_json(indent=4) }},
+    "server_config": {{ irods_server_config | to_nice_json(indent=4) }},
+    "service_account_environment": {{ irods_service_account_environment | to_nice_json(indent=4) }}
+}
