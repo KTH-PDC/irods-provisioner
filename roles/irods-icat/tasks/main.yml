@@ -1,9 +1,9 @@
 # irods-provisioner
 #
-# roles/irods-icat/tasks/main.yml - Ansible playbook for configuring an iRODS iCAT
+# roles/irods-icat/tasks/main.yml - Ansible playbook for configuring iRODS Catalog Services (iCAT)
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
 #
-# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# Copyright (C) 2016-2019 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
 ---
@@ -12,16 +12,6 @@
         name:
           - epel-release
         state: installed
-
-    # - name: Python pexpect remove stock package
-    #   yum: name=pexpect state=absent
-
-    # - name: Python pip install 
-    #   yum: name=python-pip state=latest
-
-    # - name: Python pexpect install from pip
-    #   pip:
-    #     name: pexpect
 
     - name: iRODS RPM package repository signing key
       shell: "rpm --import https://packages.irods.org/irods-signing-key.asc"
@@ -62,54 +52,11 @@
     - name: iRODS service account
       user: name={{ __irods_service_account }} group={{ __irods_service_group }} comment="iRODS Administrator" home={{ __irods_home_dir }}
 
-    # - name: run iRODS server initial setup
-    #   expect:
-    #     command: python /var/lib/irods/scripts/setup_irods.py
-    #     creates: /var/lib/irods/.irods/irods_environment.json
-    #     responses:
-    #       "*iRODS user*": "{{ irods_service_account }}"
-    #       "*iRODS group*": "{{ irods_service_group }}"
-    #       "*iRODS server's role*": "1"
-    #       "*ODBC driver for postgres*": "PostgreSQL"
-    #       "*Database server's hostname or IP address*": "{{ irods_icat_db_host }}"
-    #       "*Database server's port*": "{{ irods_icat_db_port }}"
-    #       "*Database name*": "{{ irods_icat_db }}"
-    #       "*Database username*": "{{ irods_icat_user }}"
-    #       "*Please confirm*": "yes"
-    #       "*Database password*": "{{ irods_icat_passwd }}"
-    #       "*Salt for passwords stored in the database*": "{{ irods_icat_db_salt }}"
-    #       "*iRODS server's zone name*": "{{ irods_zone_name }}"
-    #       "*iRODS server's port*": "{{ irods_zone_port }}"
-    #       "*iRODS port range (begin)*": "{{ irods_xfer_port_min }}"
-    #       "*iRODS port range (end)*": "{{ irods_xfer_port_max }}"
-    #       "*Control Plane port*": "{{ irods_ctrl_port }}"
-    #       "*Schema Validation Base URI (or off)*": "{{ irods_validation_url }}"
-    #       "*iRODS server's administrator username*": "{{ irods_admin_user }}"
-    #       "*Please confirm*": "yes"
-    #       "*iRODS server's zone key*": "{{ irods_zone_key }}"
-    #       "*iRODS server's negotiation key (32 characters)*": "{{ irods_negotiation_key }}"
-    #       "*Control Plane key (32 characters)*": "{{ irods_ctrl_key }}"
-    #       "*iRODS server's administrator password*": "{{ irods_admin_passwd }}"
-    #       "*iRODS Vault directory*": "{{ irods_temp_vault_dir }}"
-
-    # - name: write ODBC discovery script (to pin against postgres-9.x  ODBC)
-    #   template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0755
-    #   with_items:
-    #     - { srcfile: "../templates/irods-find_odbc_postgres.sh.j2", destfile: "{{ irods_home }}/packaging/find_odbc_postgres.sh" } 
-
-    # - name: execute iRODS iCAT initial permissions setup if necessary
-    #   shell: "{{ irods_home }}/packaging/setup_irods_service_account.sh < {{ irods_home }}/setup-permissions-answerfile.txt"
-    #   args:
-    #     creates: "/etc/irods/service_account.config"
-
     - name: iRODS service account environment directory
       file: path="{{ __irods_home_dir }}/.irods" state=directory owner={{ __irods_service_account }} group={{ __irods_service_group }} mode=0700 
 
-    # - name: execute iRODS iCAT initial setup if necessary on master
-    #   shell: "{{ irods_home }}/packaging/setup_irods.sh < {{ irods_home }}/setup-answerfile.txt"
-    #   when: ha_state == "master"
-    #   args:
-    #     creates: "{{ irods_home }}/.irods/irods_environment.json"
+    - name: iRODS setup JSON, for (re)install of the server
+      template: src="../../../templates/irods-unattended_installation.json.j2" dest="{{ __irods_home_dir }}/unattended_installation.json" mode=0600
 
     # - name: configure iRODS iCAT
     #   template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
