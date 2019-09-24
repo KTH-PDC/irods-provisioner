@@ -3,10 +3,10 @@
 # group_vars/irods-frontend - group variables for the iRODS frontend hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
 #
-# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# Copyright (C) 2016-2019 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
-# postgres base configuration
+# PostgreSQL database configuration
 postgres_port: 5432
 postgres_prefix: /usr/pgsql-9.5
 postgres_homedir: /var/lib/pgsql
@@ -17,29 +17,21 @@ postgres_listen: localhost
 postgres_maxconn: 100
 postgres_buf_shared: 128MB
 
-# postgres healthcheck role/database configuration
+# PostgreSQL healthcheck configuration
 healthcheck_user: healthcheck
 healthcheck_passwd: 0nksp0ssuja
 healthcheck_db: healthcheck
 
-# metalnx-web configuration
+# MetaLnx web app configuration
 metalnx_db_user: metalnx
 metalnx_db_passwd: emc&irods#1
 metalnx_db: metalnx
-metalnx_irods_host: "{{ irods_icat_master }}"
+metalnx_irods_host: "{{ icat_master_host }}"
 metalnx_vhost_port: 8008
 metalnx_vhost_name: "{{ ansible_nodename }}"
 metalnx_vhost_ssl_enable: false
 
-# b2stage-gridftp configuration
-b2stage_gridftp_repo: https://github.com/EUDAT-B2STAGE/B2STAGE-GridFTP
-b2stage_gridftp_buildroot: /tmp/B2STAGE-GridFTP
-b2stage_gridftp_includepath: /usr/include/globus
-b2stage_gridftp_globus_prefix: /usr
-b2stage_gridftp_irods_prefix: /usr
-b2stage_gridftp_dest_path: /opt/iRODS_DSI
-
-# Davrods configuration
+# iRODS WebDAV gateway (davrods) configuration
 davrods_vhost_port: 8443
 davrods_vhost_name: "{{ ansible_nodename }}"
 davrods_vhost_ssl_enable: false
@@ -47,7 +39,7 @@ davrods_anon_vhost_enable: true
 davrods_anon_vhost_port: 9000
 davrods_anon_vhost_name: "{{ ansible_nodename }}"
 davrods_anon_vhost_ssl_enable: false
-davrods_irods_host: "{{ irods_icat_master }}"
+davrods_irods_host: "{{ icat_master_host }}"
 davrods_auth_scheme: Native
 davrods_default_resc: "{{ irods_default_resc }}"
 davrods_exposed_root: Zone

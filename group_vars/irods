@@ -1,44 +1,117 @@
 # irods-provisioner
 #
-# group_vars/irods - global variables for the iRODS grid hosts
+# group_vars/irods - global variables for all of the iRODS data grid hosts
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
 #
-# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# Copyright (C) 2016-2019 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
-# iRODS cluster configuration
-irods_icat_master: rodsmaster1
-irods_icat_slave: rodsmaster2
+# iRODS Catalog Services (iCAT) Hosts
+icat_master_host: "rodsmaster1"
+icat_slave_host: "rodsmaster2"
 
-# iRODS base configuration
-irods_icat_host: "{{ irods_icat_master }}"
-irods_home: /var/lib/irods
-irods_service_account: irods
-irods_service_group: irods
-irods_zone_name: tempZone
-irods_zone_port: 1247
-irods_xfer_port_min: 20000
-irods_xfer_port_max: 20199
-irods_temp_vault_dir: /var/lib/irods/iRODS/Vault
-irods_zone_key: TEMPORARY_zone_key
-irods_negotiation_key: TEMPORARY_32byte_negotiation_key
-irods_ctrl_port: 1248
-irods_ctrl_key: TEMPORARY__32byte_ctrl_plane_key
-irods_validation_url: https://schemas.irods.org/configuration
-irods_admin_user: rods
-irods_admin_passwd: rods
-irods_default_resc: demoResc
-irods_client_server_policy: CS_NEG_REFUSE
+# iRODS Installation Service Account
+__irods_service_account: "irods"
+__irods_service_group: "irods"
+__irods_home_dir: "/var/lib/irods"
 
-# iRODS rule engine configuration
-irods_rulebase_set:
-- { "filename": "core-override" }
-- { "filename": "core" }
+# iRODS Super User
+__irods_admin_user: "rods"
+__irods_admin_passwd: "rodsrods"
 
-# iRODS zone federation configuration
-irods_zone_federation:
-- { "icat_host": "hostname", "irods_port": 1247, "zone_name": "zonename", "zone_key": "TEMPORARY_zone_key", "negotiation_key": "TEMPORARY_32byte_negotiation_key" }
+__irods_client_server_policy: "CS_NEG_REFUSE"
 
+
+# legacy config:
+# -------------------------------------------------------------------------------------
+# # iRODS base configuration
+# irods_icat_host: "{{ icat_master_host }}"
+# irods_home: /var/lib/irods
+# irods_service_account: irods
+# irods_service_group: irods
+# irods_zone_name: tempZone
+# irods_zone_port: 1247
+# irods_xfer_port_min: 20000
+# irods_xfer_port_max: 20199
+# irods_temp_vault_dir: /var/lib/irods/iRODS/Vault
+# irods_zone_key: TEMPORARY_zone_key
+# irods_negotiation_key: TEMPORARY_32byte_negotiation_key
+# irods_ctrl_port: 1248
+# irods_ctrl_key: TEMPORARY__32byte_ctrl_plane_key
+# irods_validation_url: file:///var/lib/irods/configuration_schemas
+# irods_admin_user: rods
+# irods_admin_passwd: rods
+# irods_default_resc: demoResc
+# irods_client_server_policy: CS_NEG_REFUSE
+# # iRODS rule engine configuration
+# irods_rulebase_set:
+# - { "filename": "core-override" }
+# - { "filename": "core" }
+# # iRODS zone federation configuration
+# irods_zone_federation:
+# - { "icat_host": "hostname", "irods_port": 1247, "zone_name": "zonename", "zone_key": "TEMPORARY_zone_key", "negotiation_key": "TEMPORARY_32byte_negotiation_key" }
+# -------------------------------------------------------------------------------------
+
+
+# Advanced iRODS Configuration (full accesss to all configuration variables)
+
+irods_schema_version: "v3"
+
+irods_hosts_config:
+  - schema_name: "hosts_config"
+  - schema_version: "{{ irods_schema_version }}"
+  - host_entries: []
+
+irods_host_access_control_config:
+  - schema_name: "host_access_control_config"
+  - schema_version: "{{ irods_schema_version }}"
+  - access_entries: []
+
+irods_service_account_environment:
+  - schema_name: "irods_environment"
+  - schema_version: "{{ irods_schema_version }}"
+  - irods_client_server_negotiation: "request_server_negotiation"
+  - irods_client_server_policy:
+  - irods_connection_pool_refresh_time_in_seconds: "300"
+  - irods_cwd:
+  - irods_default_hash_scheme: 
+  - irods_default_number_of_transfer_threads:
+  - irods_default_resource:
+  - irods_encryption_algorithm:
+  - irods_encryption_key_size:
+  - irods_encryption_num_hash_rounds:
+  - irods_encryption_salt_size:
+  - irods_home:
+  - irods_host:
+  - irods_match_hash_policy:
+  - irods_maximum_size_for_single_buffer_in_megabytes:
+  - irods_port
+  - irods_server_control_plane_encryption_algorithm
+  - irods_server_control_plane_encryption_num_hash_rounds
+  - irods_server_control_plane_key
+  - irods_server_control_plane_port
+  - irods_transfer_buffer_size_for_parallel_transfer_in_megabytes
+  - irods_user_name
+  - irods_zone_name
+
+irods_server_config:
+  - default_resource_name: tempResc
+  - default_resource_directory: /var/lib/irods/iRODS/Vault
+  - zone_name: tempZone
+  - zone_port: 1247
+  - zone_user: "{{ irods_admin_user }}"
+  - zone_auth_scheme: native
+  - zone_key: TEMPORARY_zone_key
+  - negotiation_key: TEMPORARY_32byte_negotiation_key
+  - server_port_range_end: 20000
+  - server_port_range_max: 20199
+  - server_control_plane_port: 1248
+  - server_control_plane_key: TEMPORARY__32byte_ctrl_plane_key
+  - catalog_provider_hosts:
+    - "{{ icat_master_host }}"
+
+
+# syslog forwarder setup
 logforw_delay: 10
-logforw_pattern: /var/lib/irods/iRODS/server/log/rodsLog.*
-logforw_path: /var/lib/irods/iRODS/server/log
+logforw_pattern: "{{ irods_home_dir }}/log/rodsLog.*"
+logforw_path: "{{ irods_home_dir }}/log"
