@@ -3,7 +3,7 @@
 # playbooks/irods-cluster.yml - Ansible playbook for configuring a test iRODS cluster
 # Author: Ilari Korhonen, KTH Royal Institute of Technology
 #
-# Copyright (C) 2016-2017 KTH Royal Institute of Technology. All rights reserved.
+# Copyright (C) 2016-2019 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
 ---
@@ -45,7 +45,7 @@
           - git
         state: latest
 
-- hosts: irods-icat
+- hosts: irods_icat
   become_user: root
   
   roles:
@@ -53,32 +53,32 @@
 
     - role: irods-icat
 
-    - role: emc-metalnx-rmd
+    # - role: emc-metalnx-rmd
 
-    - role: irods-nagios
+    # - role: irods-nagios
 
-    - role: irods-logforw
+    # - role: irods-logforw
 
-- hosts: irods-resource
+- hosts: irods_resource
   become_user: root
 
   roles:
     - role: irods-resource
 
-    - role: davrods
+    # - role: davrods
 
-    - role: emc-metalnx-rmd
+    # - role: emc-metalnx-rmd
 
-    - role: irods-logforw
+    # - role: irods-logforw
 
-- hosts: irods-frontend
+- hosts: irods_frontend
   become_user: root
 
   roles:
     - role: irods-client
 
-    - role: davrods
+    # - role: davrods
 
-    - role: postgres
+    # - role: postgres
 
-    - role: emc-metalnx-web
+    # - role: emc-metalnx-web

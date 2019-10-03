@@ -1,0 +1,44 @@
+# irods-provisioner
+#
+# group_vars/irods-icat - group variables for the iRODS Catalog Services (iCAT) hosts
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2019 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+# PostgreSQL base configuration
+postgres_port: 5432
+postgres_prefix: /usr/pgsql-9.6
+postgres_homedir: /var/lib/pgsql
+postgres_rootdir: /var/lib/pgsql/9.6
+postgres_datadir: /var/lib/pgsql/9.6/data
+postgres_passwd: r00hr00h
+postgres_listen: '*'
+postgres_maxconn: 100
+postgres_buf_shared: 128MB
+
+# PostgreSQL replication role configuration
+replication_user: replication
+replication_passwd: kl00nip0ssu
+
+# PostgreSQL healthcheck configuration
+healthcheck_user: healthcheck
+healthcheck_passwd: 0nksp0ssuja
+healthcheck_db: healthcheck
+
+# pgadmin configuration
+pgadmin_vhost_port: 8008
+pgadmin_vhost_ssl_enable: false
+
+# nagios configuration
+nagios_admin_passwd: nagnag@rods
+nagios_vhost_port: 80
+nagios_vhost_ssl_enable: false
+
+# iRODS Catalog Services (iCAT) database configuration
+icat_db_user: irods
+icat_db_passwd: r0dsi@p0ssu
+icat_db_name: irods-icat
+icat_db_host: localhost
+icat_db_port: "{{ postgres_port }}"
+icat_db_salt: d9m045
