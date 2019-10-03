@@ -14,14 +14,14 @@ rodsresc2
 rodsresc3
 rodsfront1
 
-[irods-icat]
+[irods_icat]
 rodsmaster1
 rodsmaster2
 
-[irods-resource]
+[irods_resource]
 rodsresc1
 rodsresc2
 rodsresc3
 
-[irods-frontend]
+[irods_frontend]
 rodsfront1
