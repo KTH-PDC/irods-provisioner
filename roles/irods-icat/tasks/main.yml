@@ -15,6 +15,8 @@
 
     - name: iRODS RPM package repository signing key
       shell: "rpm --import https://packages.irods.org/irods-signing-key.asc"
+      args:
+        warn: false
 
     - name: iRODS RPM package repository
       get_url:
