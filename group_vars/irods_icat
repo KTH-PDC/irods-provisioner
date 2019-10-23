@@ -71,7 +71,7 @@ irods_server_config:
     authentication: {}
     database:
       postgres:
-        db_host: "{{ icat_master_host }}"
+        db_host: "{{ icat_db_host }}"
         db_name: "{{ icat_db_name }}"
         db_odbc_driver: "PostgreSQL"
         db_odbc_type: "unix"
