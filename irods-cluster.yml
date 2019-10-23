@@ -51,7 +51,7 @@
   roles:
     - role: postgres 
 
-    - role: irods-icat
+    - role: irods-server
 
     # - role: emc-metalnx-rmd
 
@@ -63,7 +63,7 @@
   become_user: root
 
   roles:
-    - role: irods-resource
+    - role: irods-server
 
     # - role: davrods
 
