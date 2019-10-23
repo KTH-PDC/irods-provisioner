@@ -14,11 +14,21 @@
           - epel-release
         state: installed
 
-    - name: iRODS packages (version 4.1.11)
+    - name: iRODS RPM package repository signing key
+      shell: "rpm --import https://packages.irods.org/irods-signing-key.asc"
+      args:
+        warn: false
+
+    - name: iRODS RPM package repository
+      get_url:
+        url: https://packages.irods.org/renci-irods.yum.repo
+        dest: /etc/yum.repos.d/renci-irods.yum.repo
+
+    - name: iRODS version 4.2.x latest
       yum:
         name:
-          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-runtime-4.1.11-centos7-x86_64.rpm
-          - ftp://ftp.renci.org/pub/irods/releases/4.1.11/centos7/irods-icommands-4.1.11-centos7-x86_64.rpm
+          - irods-runtime
+          - irods-icommands
         state: installed
 
     - name: add role execution info to irods-provisioner manifest file
