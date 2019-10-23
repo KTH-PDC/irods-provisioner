@@ -39,7 +39,7 @@ irods_server_config:
     transfer_chunk_size_for_parallel_transfer_in_megabytes: 40
   catalog_provider_hosts:
     - "{{ icat_master_host }}"
-  catalog_service_role: consumer
+  catalog_service_role: "consumer"
   default_dir_mode: "0750"
   default_file_mode: "0600"
   default_hash_scheme: "SHA256"

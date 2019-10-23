@@ -73,11 +73,12 @@ irods_server_config:
     database:
       postgres:
         db_host: "{{ icat_master_host }}"
-        db_name:
-        db_odbc_driver:
-        db_password:
-        db_port:
-        db_username:
+        db_name: "{{ icat_db_name }}"
+        db_odbc_driver: "PostgreSQL"
+        db_odbc_type: "unix"
+        db_password: "{{ icat_db_passwd }}"
+        db_port: "{{ icat_db_port }}"
+        db_username: "{{ icat_db_user }}"
     network: {}
     resource: {}
     rule_engines:
