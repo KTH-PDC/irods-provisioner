@@ -39,7 +39,7 @@ irods_server_config:
     transfer_chunk_size_for_parallel_transfer_in_megabytes: 40
   catalog_provider_hosts:
     - "{{ icat_master_host }}"
-  catalog_service_role:
+  catalog_service_role: consumer
   default_dir_mode: "0750"
   default_file_mode: "0600"
   default_hash_scheme: "SHA256"
@@ -51,14 +51,7 @@ irods_server_config:
   negotiation_key: "{{ __irods_negotiation_key }}"
   plugin_configuration:
     authentication: {}
-    database:
-      postgres:
-        db_host: "{{ icat_master_host }}"
-        db_name:
-        db_odbc_driver:
-        db_password:
-        db_port:
-        db_username:
+    database: {}
     network: {}
     resource: {}
     rule_engines:
