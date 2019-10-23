@@ -36,7 +36,7 @@
       become: yes
       become_user: postgres
       postgresql_user: name={{ item.name }} password={{ item.password }} role_attr_flags={{ item.flags }} encrypted=yes
-      when: ha_state == "master"
+      when: inventory_hostname == icat_master_host
       with_items:
         - { name: "{{ icat_db_user }}", password: "{{ icat_db_passwd }}", flags: "LOGIN" }
 
@@ -44,7 +44,7 @@
       become: yes
       become_user: postgres
       postgresql_db: name={{ item.name }} owner={{ item.owner }} encoding="UTF-8" template="template1" login_user="postgres"
-      when: ha_state == "master"
+      when: inventory_hostname == icat_master_host
       with_items:
         - { name: "{{ icat_db_name }}", owner: "{{ icat_db_user }}" }
 
@@ -73,4 +73,4 @@
     #   notify: restart irods
 
     - name: add role execution info to irods-provisioner manifest file
-      shell: echo "# role irods-server provisioned successfully at {{ ansible_date_time.iso8601_micro }}, ha_state={{ ha_state }}" >> /etc/irods-provisioner.manifest
+      shell: echo "# role irods-server provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
