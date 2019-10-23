@@ -40,7 +40,6 @@ icat_db_user: irods
 icat_db_passwd: r0dsi@p0ssu
 icat_db_name: irods-icat
 icat_db_host: localhost
-icat_db_port: "{{ postgres_port }}"
 icat_db_salt: d9m045
 
 # iRODS Server Configuration (full accesss to all configuration variables)
@@ -77,7 +76,7 @@ irods_server_config:
         db_odbc_driver: "PostgreSQL"
         db_odbc_type: "unix"
         db_password: "{{ icat_db_passwd }}"
-        db_port: "{{ icat_db_port }}"
+        db_port: "{{ postgres_port }}"
         db_username: "{{ icat_db_user }}"
     network: {}
     resource: {}

@@ -21,12 +21,12 @@ __irods_admin_passwd: "rodsrods"
 
 # iRODS Zone Parameters
 __irods_zone_name: "tempZone"
-__irods_port: "1247"
+__irods_port: 1247
 __irods_client_server_policy: "CS_NEG_REFUSE"
 __irods_zone_key: "TEMPORARY_zone_key"
 __irods_negotiation_key: "TEMPORARY_32byte_negotiation_key"
 
-__irods_ctrl_plane_port: "1248"
+__irods_ctrl_plane_port: 1248
 __irods_ctrl_plane_key: "TEMPORARY__32byte_ctrl_plane_key"
 __irods_ctrl_plane_encryption_algo: "AES-256-CBC"
 __irods_ctrl_plane_encryption_rounds: 16
@@ -86,7 +86,7 @@ irods_service_account_environment:
   schema_version: "{{ __irods_schema_version }}"
   irods_client_server_negotiation: "request_server_negotiation"
   irods_client_server_policy: "{{ __irods_client_server_policy }}"
-  irods_connection_pool_refresh_time_in_seconds: "300"
+  irods_connection_pool_refresh_time_in_seconds: 300
   irods_cwd: "/{{ __irods_zone_name }}/home/{{ __irods_admin_user }}" 
   irods_default_hash_scheme: "SHA256"
   irods_default_number_of_transfer_threads: 4
