@@ -53,7 +53,6 @@ irods_server_config:
   negotiation_key: "{{ __irods_negotiation_key }}"
   plugin_configuration:
     authentication: {}
-    database: {}
     network: {}
     resource: {}
     rule_engines:
