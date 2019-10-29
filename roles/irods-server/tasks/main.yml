@@ -23,12 +23,12 @@
         url: https://packages.irods.org/renci-irods.yum.repo
         dest: /etc/yum.repos.d/renci-irods.yum.repo
 
-    - name: iRODS version 4.2.x latest
+    - name: iRODS version 4.2.6
       yum:
         name:
           - unixODBC
-          - irods-runtime
-          - irods-server
+          - irods-runtime-4.2.6
+          - irods-server-4.2.6
           - irods-database-plugin-postgres
         state: installed
 
