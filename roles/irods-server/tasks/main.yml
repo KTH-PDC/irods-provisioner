@@ -60,9 +60,9 @@
     - name: iRODS setup JSON, for (re)install of the server
       template: src="../../../templates/irods-unattended_installation.json.j2" dest="{{ __irods_home_dir }}/unattended_installation.json" mode=0600
 
-    - name: run iRODS setup to initialize database (if no install exists yet)
+    - name: run iRODS setup to initialize and test installation (for a new install)
       shell: "python {{ __irods_home_dir }}/scripts/setup_irods.py --json_configuration_file={{ __irods_home_dir }}/unattended_installation.json"
-      when: inventory_hostname == icat_master_host
+      when: inventory_hostname == icat_master_host or irods_server_config['catalog_service_role'] == "consumer"
       args:
         creates: "{{ __irods_home_dir }}/.irods/irods_environment.json"
 

@@ -45,7 +45,7 @@ irods_server_config:
   default_dir_mode: "0750"
   default_file_mode: "0600"
   default_hash_scheme: "SHA256"
-  default_resource_name: "{{ __irods_default_resource }}"
+  default_resource_name: "{{ ansible_nodename }}_resc"
   environment_variables:
     IRODS_DATABASE_USER_PASSWORD_SALT: "d9m045"
   federation: []
