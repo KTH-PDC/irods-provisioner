@@ -8,15 +8,15 @@
 
 acPreConnect(*OUT)
 {
-	*OUT = "{{ irods_client_server_policy }}";
+	*OUT = "{{ __irods_client_server_policy }}";
 }
 
 acSetRescSchemeForCreate
 {
-	msiSetDefaultResc("{{ irods_default_resc }}","null");
+	msiSetDefaultResc("{{ __irods_default_resource }}","null");
 }
 
 acSetRescSchemeForRepl
 {
-	msiSetDefaultResc("{{ irods_default_resc }}","null");
+	msiSetDefaultResc("{{ __irods_default_resource }}","null");
 }
