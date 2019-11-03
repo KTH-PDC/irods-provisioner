@@ -41,7 +41,7 @@ davrods_anon_vhost_name: "{{ ansible_nodename }}"
 davrods_anon_vhost_ssl_enable: false
 davrods_irods_host: "{{ icat_master_host }}"
 davrods_auth_scheme: Native
-davrods_default_resc: "{{ irods_default_resc }}"
+davrods_default_resc: "{{ __irods_default_resource }}"
 davrods_exposed_root: Zone
 davrods_tx_buffer: 4096
 davrods_rx_buffer: 4096

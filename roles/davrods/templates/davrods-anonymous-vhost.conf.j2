@@ -31,8 +31,8 @@ Listen {{ davrods_anon_vhost_port }}
        Dav davrods-locallock
 
        DavRodsEnvFile  /etc/httpd/irods/irods_environment.json
-       DavRodsServer {{ davrods_irods_host }} {{ irods_zone_port }}
-       DavRodsZone {{ irods_zone_name }}
+       DavRodsServer {{ davrods_irods_host }} {{ __irods_port }}
+       DavRodsZone {{ __irods_zone_name }}
        DavRodsAuthScheme {{ davrods_anon_login_auth_scheme }}
 
        DavRodsAnonymousMode On
