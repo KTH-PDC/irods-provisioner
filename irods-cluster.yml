@@ -53,8 +53,6 @@
 
     - role: irods-server
 
-    # - role: emc-metalnx-rmd
-
     # - role: irods-nagios
 
     # - role: irods-logforw
@@ -65,9 +63,7 @@
   roles:
     - role: irods-server
 
-    # - role: davrods
-
-    # - role: emc-metalnx-rmd
+    - role: davrods
 
     # - role: irods-logforw
 
@@ -77,7 +73,7 @@
   roles:
     - role: irods-client
 
-    # - role: davrods
+    - role: davrods
 
     # - role: postgres
 
