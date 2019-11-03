@@ -66,17 +66,16 @@
       args:
         creates: "{{ __irods_home_dir }}/.irods/irods_environment.json"
 
-    # - name: configure iRODS
-    #   template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ irods_service_account }} group={{ irods_service_group }} mode=0600
-    #   with_items:
-    #     - { srcfile: "../templates/irods-dot-odbc.ini.j2", destfile: "{{ irods_home }}/.odbc.ini" }
-    #     - { srcfile: "../templates/irods-dot-pgpass.j2", destfile: "{{ irods_home }}/.pgpass" }
-    #     - { srcfile: "../../../templates/irods-irods_environment.json.j2", destfile: "{{ irods_home }}/.irods/irods_environment.json" }
-    #     - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
-    #     - { srcfile: "../templates/irods-database_config.json.j2", destfile: "/etc/irods/database_config.json" }
-    #     - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
-    #     - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
-    #   notify: restart irods
+    - name: configure iRODS
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ __irods_service_account }} group={{ __irods_service_group }} mode=0600
+      with_items:
+        - { srcfile: "../templates/irods-dot-odbc.ini.j2", destfile: "{{ __irods_home_dir }}/.odbc.ini" }
+        - { srcfile: "../../../templates/irods-irods_environment.json.j2", destfile: "{{ __irods_home_dir }}/.irods/irods_environment.json" }
+        - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
+        - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
+        - { srcfile: "../templates/irods-hosts_config.json.j2", destfile: "/etc/irods/hosts_config.json" }
+        - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
+      notify: restart irods
 
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-server provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
