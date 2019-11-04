@@ -82,8 +82,6 @@ irods_host_access_control_config:
   access_entries: []
 
 irods_service_account_environment:
-  schema_name: "irods_environment"
-  schema_version: "{{ __irods_schema_version }}"
   irods_client_server_negotiation: "request_server_negotiation"
   irods_client_server_policy: "{{ __irods_client_server_policy }}"
   irods_connection_pool_refresh_time_in_seconds: 300
