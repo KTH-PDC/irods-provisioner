@@ -66,14 +66,20 @@
       args:
         creates: "{{ __irods_home_dir }}/.irods/irods_environment.json"
 
-    - name: configure iRODS
+    - name: write iRODS configurations (database connectivity, only for providers)
       template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ __irods_service_account }} group={{ __irods_service_group }} mode=0600
       with_items:
         - { srcfile: "../templates/irods-dot-odbc.ini.j2", destfile: "{{ __irods_home_dir }}/.odbc.ini" }
+      when: inventory_hostname == icat_master_host
+
+    - name: write iRODS configurations (for all hosts)
+      template: src={{ item.srcfile }} dest={{ item.destfile }} owner={{ __irods_service_account }} group={{ __irods_service_group }} mode=0600
+      with_items:
         - { srcfile: "../../../templates/irods-irods_environment.json.j2", destfile: "{{ __irods_home_dir }}/.irods/irods_environment.json" }
         - { srcfile: "../templates/irods-service_account.config.j2", destfile: "/etc/irods/service_account.config" }
         - { srcfile: "../templates/irods-server_config.json.j2", destfile: "/etc/irods/server_config.json" }
         - { srcfile: "../templates/irods-hosts_config.json.j2", destfile: "/etc/irods/hosts_config.json" }
+        - { srcfile: "../templates/irods-host_access_control_config.json.j2", destfile: "/etc/irods/host_access_control_config.json" }
         - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
       notify: restart irods
 
