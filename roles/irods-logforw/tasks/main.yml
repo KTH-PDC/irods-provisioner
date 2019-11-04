@@ -25,10 +25,10 @@
       template: src=../templates/logrotate-irods.j2 dest=/etc/logrotate.d/irods owner=root group=root mode=0644
 
     - name: directory for irods syslog
-      file: path=/var/log/irods state=directory owner={{ irods_service_account }} group={{ irods_service_group }} mode=0700
+      file: path=/var/log/irods state=directory owner={{ __irods_service_account }} group={{ __irods_service_group }} mode=0700
 
     - name: logforw directory permissions
-      file: path=/var/log/logforw state=directory owner={{ irods_service_account }} group={{ irods_service_group }} mode=0700
+      file: path=/var/log/logforw state=directory owner={{ __irods_service_account }} group={{ __irods_service_group }} mode=0700
 
     - name: logforw service enabled and (re)started
       systemd: name=logforw enabled=yes state=restarted
