@@ -1,7 +1,0 @@
-{
-{% if irods_hosts_config is defined %}
-    "host_entries": {{ irods_hosts_config | to_json }}
-{% else %}
-    "host_entries": []
-{% endif %}
-}
