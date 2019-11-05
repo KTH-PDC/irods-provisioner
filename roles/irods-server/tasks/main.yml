@@ -81,7 +81,6 @@
         - { srcfile: "../templates/irods-hosts_config.json.j2", destfile: "/etc/irods/hosts_config.json" }
         - { srcfile: "../templates/irods-host_access_control_config.json.j2", destfile: "/etc/irods/host_access_control_config.json" }
         - { srcfile: "../../../templates/irods-core-override.re.j2", destfile: "/etc/irods/core-override.re" }
-      notify: restart irods
 
     - name: add role execution info to irods-provisioner manifest file
       shell: echo "# role irods-server provisioned successfully at {{ ansible_date_time.iso8601_micro }}" >> /etc/irods-provisioner.manifest
