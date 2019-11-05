@@ -10,6 +10,9 @@
 icat_master_host: "rodsmaster1"
 icat_slave_host: "rodsmaster2"
 
+# iRODS Catalog Services Provider
+__irods_icat_host: "{{ icat_master_host }}"
+
 # iRODS Server Installation
 __irods_home_dir: "/var/lib/irods"
 __irods_service_account: "irods"
@@ -119,7 +122,7 @@ irods_server_config:
     transfer_buffer_size_for_parallel_transfer_in_megabytes: 4
     transfer_chunk_size_for_parallel_transfer_in_megabytes: 40
   catalog_provider_hosts:
-    - "{{ icat_master_host }}"
+    - "{{ __irods_icat_host }}"
   catalog_service_role:
   default_dir_mode: "0750"
   default_file_mode: "0600"
@@ -134,7 +137,7 @@ irods_server_config:
     authentication: {}
     database:
       postgres:
-        db_host: "{{ icat_master_host }}"
+        db_host: "{{ __irods_icat_host }}"
         db_name:
         db_odbc_driver:
         db_password:
