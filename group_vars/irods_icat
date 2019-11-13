@@ -36,6 +36,7 @@ nagios_vhost_port: 80
 nagios_vhost_ssl_enable: false
 
 # iRODS Catalog Services (iCAT) database configuration
+icat_db_driver: PostgreSQL
 icat_db_user: irods
 icat_db_passwd: r0dsi@p0ssu
 icat_db_name: irods-icat
