@@ -18,11 +18,11 @@
         url: https://packages.irods.org/renci-irods.yum.repo
         dest: /etc/yum.repos.d/renci-irods.yum.repo
 
-    - name: iRODS runtime (version 4.2.6)
+    - name: iRODS runtime (version 4.2.7)
       yum:
         name:
-          - irods-runtime-4.2.6
-          - irods-icommands-4.2.6
+          - irods-runtime-4.2.7
+          - irods-icommands-4.2.7
         state: installed
 
     - name: Apache httpd
@@ -33,8 +33,8 @@
           - mod_ssl
         state: installed
 
-    - name: Davrods version 1.4.2 (release for iRODS 4.2.6)
-      yum: name=https://github.com/UtrechtUniversity/davrods/releases/download/4.2.6_1.4.2/davrods-4.2.6_1.4.2-1.rpm state=installed
+    - name: Davrods version 1.4.2 (release for iRODS 4.2.7)
+      yum: name=https://github.com/UtrechtUniversity/davrods/releases/download/4.2.7_1.4.2/davrods-4.2.7_1.4.2-1.rpm state=installed
 
     - name: SELinux for Davrods - allow httpd to connect to iRODS
       command: "setsebool -P httpd_can_network_connect true"
