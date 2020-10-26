@@ -24,11 +24,11 @@
         url: https://packages.irods.org/renci-irods.yum.repo
         dest: /etc/yum.repos.d/renci-irods.yum.repo
 
-    - name: iRODS version 4.2.7
+    - name: iRODS version 4.2.8
       yum:
         name:
-          - irods-runtime-4.2.7
-          - irods-icommands-4.2.7
+          - irods-runtime-4.2.8
+          - irods-icommands-4.2.8
         state: installed
 
     - name: add role execution info to irods-provisioner manifest file
