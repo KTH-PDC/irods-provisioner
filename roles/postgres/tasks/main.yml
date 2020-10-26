@@ -18,13 +18,12 @@
     - name: PostgreSQL 9.6 database server and python bindings
       yum:
         name:
-          - postgresql96-debuginfo
           - postgresql96-contrib
           - postgresql96-libs
           - postgresql96-odbc
           - postgresql96-server
           - pgpool-II-96-extensions
-          - python2-psycopg2
+          - python-psycopg2
         state: latest
         disablerepo: "pgdg12,pgdg11,pgdg10"
 
