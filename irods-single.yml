@@ -1,0 +1,54 @@
+# irods-provisioner
+#
+# playbooks/irods-single.yml - Ansible playbook for configuring a single iRODS host
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2021 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+---
+
+- hosts: irods-host
+  become_user: root
+
+  tasks:
+    - name: register git repo commit id
+      local_action: shell git rev-parse HEAD
+      become: no
+      register: git_commit_id
+
+    - name: "Build hosts file"
+      lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_eth1.ipv4.address }} {{item}}" state=present
+      when: hostvars[item].ansible_eth1.ipv4.address is defined
+      with_items: "{{ groups['all'] }}"
+
+    - name: build provisioner manifest file
+      template: src="../templates/irods-provisioner.manifest.j2" dest="/etc/irods-provisioner.manifest" mode=0644 owner=root group=root
+
+    - name: necessary package repositories
+      yum:
+        name:
+          - epel-release
+        state: latest
+
+    - name: necessary management packages
+      yum:
+        name:
+          - psmisc
+          - net-tools
+          - htop
+          - iotop
+          - iftop
+          - python-psycopg2
+          - httpd
+          - php
+          - git
+        state: latest
+
+- hosts: irods-host
+  become_user: root
+  
+  roles:
+    - role: postgres 
+
+    - role: irods-server

@@ -1,0 +1,10 @@
+# irods-provisioner
+#
+# hosts-test-singlevm - Ansible inventory file for a single test host 
+# Author: Ilari Korhonen, KTH Royal Institute of Technology
+#
+# Copyright (C) 2016-2021 KTH Royal Institute of Technology. All rights reserved.
+# See LICENSE file for more information.
+
+[irods-host]
+rodsmaster1
