@@ -17,15 +17,6 @@ postgres_listen: 'localhost'
 postgres_maxconn: 100
 postgres_buf_shared: 128MB
 
-# PostgreSQL replication role configuration
-replication_user: replication
-replication_passwd: kl00nip0ssu
-
-# PostgreSQL healthcheck configuration
-healthcheck_user: healthcheck
-healthcheck_passwd: 0nksp0ssuja
-healthcheck_db: healthcheck
-
 # iRODS Catalog Services (iCAT) database configuration
 icat_db_driver: PostgreSQL
 icat_db_user: irods
