@@ -6,5 +6,5 @@
 # Copyright (C) 2016-2021 KTH Royal Institute of Technology. All rights reserved.
 # See LICENSE file for more information.
 
-[irods-host]
+[irods_host]
 rodsmaster1

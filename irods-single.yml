@@ -8,7 +8,7 @@
 
 ---
 
-- hosts: irods-host
+- hosts: irods_host
   become_user: root
 
   tasks:
@@ -45,10 +45,12 @@
           - git
         state: latest
 
-- hosts: irods-host
+- hosts: irods_host
   become_user: root
   
   roles:
     - role: postgres 
 
     - role: irods-server
+
+    - role: davrods
