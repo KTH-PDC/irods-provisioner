@@ -74,6 +74,7 @@ Vagrant.configure(2) do |config|
 
       # virtualbox private network for the HA network
       config.vm.network :private_network, ip: opts[:eth2], virtualbox__intnet: true
+      config.vm.provision :shell, inline: "yum -y update"
     end
   end
 end
